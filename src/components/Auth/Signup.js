@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import "./Auth.css";
 const Signup = () => {
   const [state, setState] = useState({
     username: "",
     displayName: "",
     password: "",
     confirmPassword: "",
+    email: ""
   });
   const history = useHistory();
   const handleInputChange = (e) => {
@@ -34,12 +34,21 @@ const Signup = () => {
           ></input>
         </div>
         <div>
-          <label>Password:</label>
+          <label>Display Name:</label>
           <input
             name="displayName"
             type="text"
             onChange={handleInputChange}
             value={state.displayName}
+          ></input>
+        </div>
+        <div>
+          <label>Email:</label>
+          <input
+            name="email"
+            type="email"
+            onChange={handleInputChange}
+            value={state.email}
           ></input>
         </div>
         <div>
