@@ -1,30 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router";
 import Signin from "./Signin";
 import Signup from "./Signup";
+import Forgot from "./Forgot";
 import BackgroundImage from "../../shared/media/image/background.jpg";
 import SettingIcon from "../../shared/media/image/setting.png";
 import PowerIcon from "../../shared/media/image/power.png";
 import MusicIcon from "../../shared/media/image/music.png";
 import SoundIcon from "../../shared/media/image/sound.png";
-
+import PlayIcon from "../../shared/media/image/play.png";
 import "./Auth.css";
 import MessengerCustomerChat from "react-messenger-customer-chat";
-const Auth = (props) => {
-  const [state, setState] = useState({
-    music: true,
-    sound: true,
-  });
+import { useSelector, useDispatch } from "react-redux";
+import { switchSound, switchMusic } from "../../actions";
+import useSound from "use-sound";
+const Auth = () => {
+  const audioControl = useSelector((state) => state.audioControl);
+  const { music, sound, btnClickAudio } = audioControl;
+
+  const [playBtnClickAudio] = useSound(btnClickAudio);
+
+  const dispatch = useDispatch();
+
   const history = useHistory();
-  const MainSwitch = () => {
-    return (
-      <div className="main-switch">
-        <div s>VIP PRO online game website</div>
-        <button onClick={() => history.push("/auth/signin")}>Sign In</button>
-        <button onClick={() => history.push("/auth/signup")}>Sign Up</button>
-      </div>
-    );
-  };
 
   useEffect(() => {}, []);
   return (
@@ -36,7 +34,32 @@ const Auth = (props) => {
       <Switch>
         <Route path="/auth/signin" component={Signin} />
         <Route path="/auth/signup" component={Signup} />
-        <Route path="/" component={MainSwitch} />
+        <Route path="/auth/forgot" component={Forgot} />
+        <Route
+          path="/"
+          render={() => (
+            
+            <div className="main-switch">
+              <div s>VIP PRO online game website</div>
+              <button
+                onClick={() => {
+                  sound && playBtnClickAudio();
+                  history.push("/auth/signin");
+                }}
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => {
+                  sound && playBtnClickAudio();
+                  history.push("/auth/signup");
+                }}
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+        />
         <Route path="*" component={() => <Redirect to="/auth" />} />
       </Switch>
 
@@ -51,32 +74,38 @@ const Auth = (props) => {
             className="menu-setting-item-btn"
             style={{
               backgroundImage: `url(${SoundIcon})`,
-              border: `${
-                !state.sound ? "3px solid black" : "3px solid #f6d2e1"
-              }`,
+              border: `${!sound ? "3px solid black" : "3px solid #f6d2e1"}`,
             }}
-            onClick={(e) => setState({ ...state, sound: !state.sound })}
+            onClick={(e) => dispatch(switchSound)}
           >
-            {!state.sound && <div className="off"></div>}
+            {!sound && <div className="off"></div>}
           </button>
           <button
             className="menu-setting-item-btn"
             style={{
               backgroundImage: `url(${MusicIcon})`,
-              border: `${
-                !state.music ? "3px solid black" : "3px solid #f6d2e1"
-              }`,
+              border: `${!music ? "3px solid black" : "3px solid #f6d2e1"}`,
             }}
-            onClick={(e) => setState({ ...state, music: !state.music })}
+            onClick={(e) => dispatch(switchMusic)}
           >
-            {!state.music && <div className="off"></div>}
+            {!music && <div className="off"></div>}
           </button>
         </div>
       </div>
       <div
         className="control-container power"
         style={{ backgroundImage: `url(${PowerIcon})` }}
-        onClick={() => history.push("/hello")}
+        onClick={() => {
+          sound && playBtnClickAudio();
+        }}
+      ></div>
+      <div
+        className="control-container play"
+        style={{ backgroundImage: `url(${PlayIcon})` }}
+        onClick={() => {
+          sound && playBtnClickAudio();
+          history.push("/hello");
+        }}
       ></div>
 
       <MessengerCustomerChat

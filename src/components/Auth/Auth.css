@@ -46,14 +46,15 @@
 }
 .sign-container {
   position: relative;
-  font-size: 24px;
+  font-size: 20px;
   border: 1px solid #976dd0;
   background-color: rgb(255, 255, 255, 0.66);
   padding: 2%;
   border-radius: 20px;
   width: 600px;
 }
-.sign-container form div label, .sign-container form div div a{
+.sign-container form div label,
+.sign-container form div div a {
   text-decoration: underline solid 3px;
 }
 .sign-container form div input {
@@ -113,16 +114,16 @@
 .sign-btn:hover {
   background-color: #ddbfcb;
 }
-.already-have-account {
+.direct {
   display: flex;
   margin: 5% 0;
   justify-content: flex-end;
   align-items: flex-end;
 }
-.already-have-account a {
+.direct a {
   color: black;
 }
-.already-have-account a:hover {
+.direct a:hover {
   color: black;
 }
 .back-main-switch {
@@ -155,11 +156,15 @@
 }
 .setting {
   top: 2%;
-  right: 2%;
+  right: calc(3% + 60px);
 }
 .power {
-  top: calc(3% + 60px);
+  top: 2%;
   right: 2%;
+}
+.play {
+  bottom: 2%;
+  left: 2%;
 }
 .menu-setting {
   position: relative;
@@ -200,21 +205,36 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: .3s;
+  transition: 0.3s;
 }
-.setting:hover>.menu-setting{
-    width: 200px;
-    height: 100px;
-    left: -420%;
-    opacity: 1;
+.setting:hover > .menu-setting {
+  width: 200px;
+  height: 100px;
+  left: -420%;
+  opacity: 1;
 }
-.setting:hover>.menu-setting::before{
-    width: 40px;
-    height: 40px;
+.setting:hover > .menu-setting::before {
+  width: 40px;
+  height: 40px;
 }
-.off{
-    width: 100%;
-    height: 5%;
-    transform: rotate(35deg);
-    background-color: black;
+.off {
+  width: 100%;
+  height: 5%;
+  transform: rotate(35deg);
+  background-color: black;
+}
+.radio-btn-container {
+  display: flex;
+  flex-direction: row !important;
+  margin-top: 10px;
+  padding: 10px;
+  margin-left: 30%;
+}
+.radio-btn-container label {
+  text-decoration: none !important;
+}
+.radio-btn-container input {
+  margin: 5px 0 0 0 !important;
+  line-height: 32px;
+  width: 10% !important;
 }

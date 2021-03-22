@@ -1,26 +1,51 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import useSound from "use-sound";
+import {useSelector} from "react-redux"
+import { motion } from "framer-motion";
+
 const Signup = () => {
   const [state, setState] = useState({
     username: "",
-    displayName: "",
     password: "",
     confirmPassword: "",
-    email: ""
+    gender: true,
+    email: "",
   });
+  const audioControl = useSelector((state) => state.audioControl);
+  const { sound, btnClickAudio } = audioControl;
+  const [playBtnClickAudio] = useSound(btnClickAudio);
   const history = useHistory();
   const handleInputChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
   const handleSignInBtnClick = (e) => {
+    sound && playBtnClickAudio();
     console.log("Signup");
   };
+  const handleRadioBtnClick = (e) => {
+    sound && playBtnClickAudio();
+    setState({ ...state, gender: !state.gender });
+  };
   return (
+    <motion.div
+      className="container"
+      initial={{ scale: 0 }}
+      animate={{ scale: 1 }}
+      transition={{
+        type: "spring",
+        stiffness: 180,
+        damping: 20,
+      }}
+    >
     <div className="sign-container">
       <form>
         <span
           className="back-main-switch"
-          onClick={() => history.push("/auth")}
+          onClick={() => {
+            sound && playBtnClickAudio();
+            history.push("/auth");
+          }}
         >
           X
         </span>
@@ -34,13 +59,18 @@ const Signup = () => {
           ></input>
         </div>
         <div>
-          <label>Display Name:</label>
-          <input
-            name="displayName"
-            type="text"
-            onChange={handleInputChange}
-            value={state.displayName}
-          ></input>
+          <label>Gender: </label>
+          <div className="radio-btn-container">
+            <label for="male">Male</label>
+            <input
+              type="radio"
+              name="gender"
+              checked={state.gender}
+              onChange={handleRadioBtnClick}
+            />
+            <label for="male">Female</label>
+            <input type="radio" name="gender" onChange={handleRadioBtnClick} />
+          </div>
         </div>
         <div>
           <label>Email:</label>
@@ -69,7 +99,7 @@ const Signup = () => {
             value={state.confirmPassword}
           ></input>
         </div>
-        <div className="already-have-account">
+        <div className="direct">
           <div>
             <Link to="/auth/signin">Already have account?</Link>
           </div>
@@ -82,7 +112,7 @@ const Signup = () => {
           Sign Up
         </button>
       </form>
-    </div>
+    </div></motion.div>
   );
 };
 
