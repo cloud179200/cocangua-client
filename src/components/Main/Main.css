@@ -1,7 +1,215 @@
-.main{
-    height: 100vh;
-    width: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.main {
+  height: 100vh;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "Sensei";
+  padding: 2%;
+}
+.main-head {
+  width: 80%;
+  height: 5%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  font-size: 24px;
+}
+.name-box {
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: 100%;
+
+  width: 440px;
+  height: 120px;
+
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  padding-left: 3%;
+  margin-left: -3%;
+}
+.main-avatar {
+  background-color: #ffd185;
+  border-radius: 100%;
+  width: 60px;
+  height: 60px;
+
+  margin-bottom: 5%;
+  margin-left: 5%;
+}
+.main-username {
+  margin-left: 15%;
+  margin-bottom: 5%;
+  max-width: 150px;
+  word-break: keep-all;
+}
+.main-title {
+  color: #47525e;
+  position: relative;
+  top: 30px;
+  width: 40%;
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 3px solid #47525e;
+  border-radius: 10px;
+}
+
+.main-setting-container {
+  position: absolute;
+  top: 2%;
+  right: 2%;
+
+  width: 80px;
+  height: 80px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-setting {
+  width: 60%;
+  height: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.main-menu-setting-container {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-menu-setting {
+  position: relative;
+  background-color: #d188a6;
+  border: 1px solid #5a6978;
+  width: 0%;
+  height: 0%;
+  border-radius: 15px;
+  left: -0%;
+  top: -0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s;
+  opacity: 0;
+}
+.main-menu-setting-item-btn {
+  z-index: 99;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  width: 35%;
+  height: 80%;
+  font-family: "Sensei";
+  font-size: 24px;
+  border-radius: 15px;
+  margin: 0 10px;
+  outline: none;
+  border: none;
+  background-color: #f6d2e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+.main-menu-setting::before {
+  content: "";
+  background-color: #d188a6;
+  width: 0px;
+  height: 0px;
+  border-top: 1px solid #5a6978;
+  border-right: 1px solid #5a6978;
+  position: absolute;
+  transition: 0.5s;
+  right: -15px;
+  top: 12%;
+  transform: rotate(45deg);
+}
+.main-setting:hover > .main-menu-setting {
+  width: 450%;
+  height: 300%;
+
+  left: -500%;
+  opacity: 1;
+}
+.main-setting:hover > .main-menu-setting::before {
+  width: 30px;
+  height: 30px;
+}
+.off {
+  width: 100%;
+  height: 5%;
+  transform: rotate(35deg);
+  background-color: black;
+}
+.main-body {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 90%;
+  margin-top: 8%;
+}
+.friends-box {
+  width: 10%;
+  height: 100%; 
+
+  font-size: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 400px 800px;
+}
+.friends-box-title{
+  padding-right: 25px;
+}
+.waifu {
+  width:50%;
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.main-control {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-grow: 1;
+
+  height: 400px;
+
+  background: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 450px 300px;
+}
+.main-control-item {
+  width: 100%;
+  height: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-position: center;
+  background-repeat: no-repeat;
+
+  font-family: "Sensei";
+  font-size: 32px;
+  transition: 0.3s;
+}
+.main-control-item:hover {
+  color: white;
 }

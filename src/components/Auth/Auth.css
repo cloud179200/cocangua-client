@@ -169,6 +169,7 @@
 .menu-setting {
   position: relative;
   background-color: #d188a6;
+  border: 1px solid #5A6978;
   width: 0px;
   height: 0px;
   border-radius: 15px;
@@ -176,7 +177,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.5s;
+  transition: 0.3s;
   opacity: 0;
 }
 .menu-setting::before {
@@ -185,9 +186,10 @@
   width: 0px;
   height: 0px;
   position: absolute;
-  transition: 0.5s;
-  right: -5%;
-  top: 12%;
+  right: -15px;
+  top: 15px;
+  border-top: 1px solid #5A6978;
+  border-right: 1px solid #5A6978;
   transform: rotate(45deg);
 }
 .menu-setting-item-btn {
@@ -205,7 +207,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: 0.3s;
 }
 .setting:hover > .menu-setting {
   width: 200px;
@@ -214,8 +215,8 @@
   opacity: 1;
 }
 .setting:hover > .menu-setting::before {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
 }
 .off {
   width: 100%;

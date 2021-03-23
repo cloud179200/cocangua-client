@@ -14,7 +14,7 @@ const App = () => {
         <Switch>
           <Route path="/hello" component={Introduce} />
           <Route path="/auth" component={Auth} />
-          <Route path="/play" component={Main} />
+          <Route path="/lobby" component={Main} />
           <Route path="*" component={() => <Redirect to="/hello" />} />
         </Switch>
         <ReactHowler

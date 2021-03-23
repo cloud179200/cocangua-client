@@ -20,6 +20,7 @@ const Signin = () => {
     e.preventDefault();
     sound && playBtnClickAudio();
     console.log("Signin");
+    history.push("/lobby");
   };
   return (
     <motion.div

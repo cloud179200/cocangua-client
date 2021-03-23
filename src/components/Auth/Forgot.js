@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import {motion} from "framer-motion";
 const Forgot = () => {
   const [state, setState] = useState({
-    email: "",
+    username: "",
   });
   const audioControl = useSelector((state) => state.audioControl);
   const { sound, btnClickAudio } = audioControl;
@@ -41,7 +41,7 @@ const Forgot = () => {
             X
           </span>
           <div>
-            <label>Email:</label>
+            <label>Username:</label>
             <input
               name="username"
               type="text"
