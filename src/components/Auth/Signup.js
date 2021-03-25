@@ -66,13 +66,14 @@ const Signup = () => {
           const { success, error } = response.data;
           if (success) {
             dispatch(setNotificationMessage("Signup success"));
-            
+
             history.push("/auth/signin");
           } else {
             dispatch(setNotificationMessage(error));
           }
         })
         .catch(function (error) {
+          console.log(error);
           dispatch(setNotificationMessage(error));
         });
     }
@@ -115,14 +116,14 @@ const Signup = () => {
           <div>
             <label>Gender: </label>
             <div className="radio-btn-container">
-              <label for="male">Male</label>
+              <label>Male</label>
               <input
                 type="radio"
                 name="gender"
                 checked={state.gender}
                 onChange={handleRadioBtnClick}
               />
-              <label for="male">Female</label>
+              <label>Female</label>
               <input
                 type="radio"
                 name="gender"

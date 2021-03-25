@@ -24,8 +24,6 @@ const Auth = () => {
 
   const history = useHistory();
 
-  
-  
   return (
     <div
       className="auth"
@@ -40,7 +38,7 @@ const Auth = () => {
           path="/"
           render={() => (
             <div className="main-switch">
-              <div s>VIP PRO online game website</div>
+              <div>VIP PRO online game website</div>
               <button
                 onClick={() => {
                   sound && playBtnClickAudio();
@@ -62,7 +60,6 @@ const Auth = () => {
         />
         <Route path="*" component={() => <Redirect to="/auth" />} />
       </Switch>
-
       <div className="copyright">Copyright © 2021</div>
       <div
         className="control-container setting"
@@ -107,11 +104,13 @@ const Auth = () => {
           history.push("/hello");
         }}
       ></div>
-
-      <MessengerCustomerChat
-        pageId="101530238693742"
-        appId="3881449045268897"
-      />
+      if(history){" "}
+      {history.location.pathname && (
+        <MessengerCustomerChat
+          pageId="101530238693742"
+          appId="3881449045268897"
+        />
+      )}
     </div>
   );
 };

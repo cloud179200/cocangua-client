@@ -41,7 +41,7 @@ const Forgot = () => {
             X
           </span>
           <div>
-            <label>Username:</label>
+            <label >Username:</label>
             <input
               name="username"
               type="text"

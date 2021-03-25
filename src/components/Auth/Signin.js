@@ -46,7 +46,8 @@ const Signin = () => {
           dispatch(loadInfoUser(auth_token));
         })
         .catch(function (error) {
-          dispatch(setNotificationMessage(error));
+          console.log(error);
+          dispatch(setNotificationMessage(""));
         });
     } else {
       dispatch(setNotificationMessage("Please fill info!"));
