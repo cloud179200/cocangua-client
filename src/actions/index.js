@@ -4,3 +4,9 @@ export const switchSound = {
 export const switchMusic = {
   type: "switch/music",
 };
+export const setNotificationMessage = (message) => {
+  return{
+    type: "set/notificationMessage",
+    message: message
+  }
+}
