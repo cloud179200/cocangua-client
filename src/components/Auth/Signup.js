@@ -66,7 +66,7 @@ const Signup = () => {
           const { success, error } = response.data;
           if (success) {
             dispatch(setNotificationMessage("Signup success"));
-
+            
             history.push("/auth/signin");
           } else {
             dispatch(setNotificationMessage(error));

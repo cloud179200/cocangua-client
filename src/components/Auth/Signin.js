@@ -46,10 +46,10 @@ const Signin = () => {
           dispatch(loadInfoUser(auth_token));
         })
         .catch(function (error) {
-          console.log(error);
+          dispatch(setNotificationMessage(error));
         });
     } else {
-      dispatch(setNotificationMessage(""));
+      dispatch(setNotificationMessage("Please fill info!"));
     }
   };
   return (
