@@ -3,7 +3,8 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 import { motion } from "framer-motion";
-import { setNotificationMessage } from "../../actions";
+import { loadInfoUser, setNotificationMessage } from "../../actions";
+import axios from "axios";
 const Signin = () => {
   const [state, setState] = useState({
     username: "",
@@ -21,8 +22,35 @@ const Signin = () => {
   const handleSignInBtnClick = (e) => {
     e.preventDefault();
     sound && playBtnClickAudio();
-    dispatch(setNotificationMessage("Signin Success"));
-    history.push("/lobby");
+    const { username, password } = state;
+    const usernameVerify = username.trim();
+    if (usernameVerify && password) {
+      const data = JSON.stringify({
+        username: usernameVerify,
+        password: password,
+      });
+
+      const config = {
+        method: "post",
+        url: "http://localhost:4000/api/signin",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          const { auth_token } = response.data;
+          localStorage.setItem("auth_token", auth_token);
+          dispatch(loadInfoUser(auth_token));
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      dispatch(setNotificationMessage(""));
+    }
   };
   return (
     <motion.div

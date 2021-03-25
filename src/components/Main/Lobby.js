@@ -8,7 +8,7 @@ import MusicIcon from "../../shared/media/image/music.png";
 import ButtonGreenImage from "../../shared/media/image/button_green.png";
 import ButtonPinkImage from "../../shared/media/image/button_pink.png";
 import WaifuImage from "../../shared/media/image/waifu.png";
-import { switchMusic, switchSound } from "../../actions/index";
+import { loadInfoUser, switchMusic, switchSound } from "../../actions/index";
 import { useHistory } from "react-router-dom";
 
 const openInNewTab = (url) => {
@@ -20,7 +20,6 @@ const MainSetting = () => {
   const audioControl = useSelector((state) => state.audioControl);
   const dispatch = useDispatch();
   const { music, sound, btnClickAudio } = audioControl;
-  const history = useHistory();
   const [playBtnClickAudio] = useSound(btnClickAudio);
 
   return (
@@ -75,8 +74,8 @@ const MainSetting = () => {
               className="main-menu-setting-item-btn"
               style={{ flexBasis: "100%" }}
               onClick={() => {
-                sound && playBtnClickAudio();
-                history.push("/auth");
+                localStorage.removeItem("auth_token");
+                dispatch(loadInfoUser());
               }}
             >
               Sign out

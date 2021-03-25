@@ -13,6 +13,7 @@ import MessengerCustomerChat from "react-messenger-customer-chat";
 import { useSelector, useDispatch } from "react-redux";
 import { switchSound, switchMusic } from "../../actions";
 import useSound from "use-sound";
+import { useEffect } from "react";
 const Auth = () => {
   const audioControl = useSelector((state) => state.audioControl);
   const { music, sound, btnClickAudio } = audioControl;
@@ -23,6 +24,8 @@ const Auth = () => {
 
   const history = useHistory();
 
+  
+  
   return (
     <div
       className="auth"
@@ -36,7 +39,6 @@ const Auth = () => {
         <Route
           path="/"
           render={() => (
-            
             <div className="main-switch">
               <div s>VIP PRO online game website</div>
               <button

@@ -10,3 +10,14 @@ export const setNotificationMessage = (message) => {
     message: message
   }
 }
+export const loadInfoUser = (token = undefined) => {
+  return{
+    type: "load/infoUser",
+    auth_token: token
+  }
+}
+export const switchLoading  = () => {
+  return{
+    type: "switch/loading"
+  }
+}

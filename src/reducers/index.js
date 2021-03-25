@@ -1,8 +1,12 @@
 import audioControlReducer from "./soundControl";
 import notificationMessageReducer from "./notificationMessage";
-import {combineReducers} from "redux";
+import loggedReducer from "./logged";
+import { combineReducers } from "redux";
+import loadingReducer from "./loading";
 
-
-export default combineReducers({audioControl: audioControlReducer, notificationMessage: notificationMessageReducer})
-
-
+export default combineReducers({
+  audioControl: audioControlReducer,
+  notificationMessage: notificationMessageReducer,
+  logged: loggedReducer,
+  loading: loadingReducer
+});

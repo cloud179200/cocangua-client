@@ -1,4 +1,10 @@
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter,
+  Redirect,
+  Route,
+  Switch,
+  useHistory,
+} from "react-router-dom";
 import Auth from "./components/Auth/Auth";
 import Introduce from "./components/Introduce/Introduce";
 import ReactHowler from "react-howler";
@@ -8,21 +14,38 @@ import Main from "./components/Main/Main";
 import { Message } from "semantic-ui-react";
 import { useEffect } from "react";
 import { setNotificationMessage } from "./actions/index";
+import { loadInfoUser } from "./actions";
 const App = () => {
   const { music } = useSelector((state) => state.audioControl);
   const { message } = useSelector((state) => state.notificationMessage);
+  const { username } = useSelector((state) => state.logged);
+
   const dispatch = useDispatch();
+  const history = useHistory();
   useEffect(() => {
+    const auth_token = localStorage.getItem("auth_token");
+    history && console.log(history.location.pathname);
+    if (auth_token) {
+      dispatch(loadInfoUser());
+    } else if (!auth_token) {
+      dispatch(loadInfoUser());
+      if (username && history.location.pathname.indexOf("/lobby") === -1) {
+        history.push("/lobby");
+      }
+      if (!username && history.location.pathname.indexOf("/lobby") !== -1) {
+        history.push("/auth/signin");
+      }
+    }
     const displayMessage = setTimeout(() => {
       dispatch(setNotificationMessage(""));
     }, 5000);
     return () => {
       clearTimeout(displayMessage);
     };
-  }, [message]);
+  }, [message, username]);
   return (
     <BrowserRouter>
-      <div className="App" style={{ width: "100%", height: "auto" }}>
+      <div className="App" style={{ width: "100%", height: "100vh" }}>
         <Switch>
           <Route path="/hello" component={Introduce} />
           <Route path="/auth" component={Auth} />
