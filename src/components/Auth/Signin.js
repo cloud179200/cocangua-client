@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 import { motion } from "framer-motion";
+import { setNotificationMessage } from "../../actions";
 const Signin = () => {
   const [state, setState] = useState({
     username: "",
@@ -13,13 +14,14 @@ const Signin = () => {
   const { sound, btnClickAudio } = audioControl;
   const [playBtnClickAudio] = useSound(btnClickAudio);
   const history = useHistory();
+  const dispatch = useDispatch();
   const handleInputChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
   const handleSignInBtnClick = (e) => {
     e.preventDefault();
     sound && playBtnClickAudio();
-    console.log("Signin");
+    dispatch(setNotificationMessage("Signin Success"));
     history.push("/lobby");
   };
   return (

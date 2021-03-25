@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Redirect, Route, Switch, useHistory } from "react-router";
 import Signin from "./Signin";
 import Signup from "./Signup";
@@ -24,7 +23,6 @@ const Auth = () => {
 
   const history = useHistory();
 
-  useEffect(() => {}, []);
   return (
     <div
       className="auth"
