@@ -24,18 +24,18 @@ const App = () => {
   const history = useHistory();
   useEffect(() => {
     const auth_token = localStorage.getItem("auth_token");
-    history && console.log(history.location.pathname);
-    if (auth_token) {
-      dispatch(loadInfoUser());
-    } else if (!auth_token) {
-      dispatch(loadInfoUser());
-      if (username && history.location.pathname.indexOf("/lobby") === -1) {
-        history.push("/lobby");
-      }
-      if (!username && history.location.pathname.indexOf("/lobby") !== -1) {
-        history.push("/auth/signin");
-      }
-    }
+    // history && console.log(history.location.pathname);
+    // if (auth_token) {
+    //   dispatch(loadInfoUser());
+    // } else if (!auth_token) {
+    //   dispatch(loadInfoUser());
+    //   if (username && history.location.pathname.indexOf("/lobby") === -1) {
+    //     history.push("/lobby");
+    //   }
+    //   if (!username && history.location.pathname.indexOf("/lobby") !== -1) {
+    //     history.push("/auth/signin");
+    //   }
+    // }
     const displayMessage = setTimeout(() => {
       dispatch(setNotificationMessage(""));
     }, 5000);
