@@ -1,20 +1,30 @@
-body{
-    padding: 0;
-    margin: 0;
-    font-family: "Sensei";
-    overflow: hidden;
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Sensei";
+  overflow: hidden;
 }
-@font-face{
-    font-family: "Sensei";
-    src: url("./shared/font/Sensei-Medium.ttf") format("truetype");
+@font-face {
+  font-family: "Sensei";
+  src: url("./shared/font/Sensei-Medium.ttf") format("truetype");
 }
-.copyright{
-    font-size: 20px;
-    color: #77777F;
-    margin-top: 2%;
+.copyright {
+  font-size: 20px;
+  color: #77777f;
+  margin-top: 2%;
 }
-.ui.info.message{
-    position: fixed !important;
-    left: 2% !important;
-    bottom: 5% !important;
+.notification-messages {
+  position: fixed;
+  right: 2%;
+  bottom: 2%;
+  width: 200px;
+}
+.ui.message{
+    margin-bottom: 20px !important;
+}
+.ui.message .header+p  {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  font-family: "Sensei" !important;
 }

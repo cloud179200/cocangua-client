@@ -22,12 +22,9 @@ const connection = mysql.createConnection({
 //Signup handler
 //Check, add user to database
 app.post("/api/signup", async (req, res) => {
-  const users = req.body;
+  const {username, password, gender, email} = req.body;
   const salt = await bcrypt.genSalt();
-  const username = users.username;
-  const email = users.email;
-  const gender = users.gender;
-  const hashedPassword = await bcrypt.hash(users.password, salt);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
   const info = {
     username: username,
@@ -79,12 +76,11 @@ app.post("/api/signup", async (req, res) => {
 ]*/
 
 app.post("/api/signin", async (req, res) => {
-  const requestedUsername = req.body[0].username;
-  const requestedPassword = req.body[0].password;
-  const user = { username: requestedUsername };
+  const {username, password} = req.body;
+  const user = { username: username };
   var sql =
     "select count(id) as count, username, password  from users where username = '" +
-    requestedUsername +
+    username +
     "';";
   connection.query(sql, async (err, results) => {
     let checkLogin = 0;
@@ -93,7 +89,7 @@ app.post("/api/signin", async (req, res) => {
     var userDataPassword = results[0].password;
     if (checkLogin > 0) {
       try {
-        if (await bcrypt.compare(requestedPassword, userDataPassword)) {
+        if (await bcrypt.compare(password, userDataPassword)) {
           const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
             expiresIn: 60 * 60 * 12,
           });

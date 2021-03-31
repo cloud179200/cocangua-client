@@ -9,20 +9,21 @@ import MusicIcon from "../../shared/media/image/music.png";
 import SoundIcon from "../../shared/media/image/sound.png";
 import PlayIcon from "../../shared/media/image/play.png";
 import "./Auth.css";
-import MessengerCustomerChat from "react-messenger-customer-chat";
 import { useSelector, useDispatch } from "react-redux";
 import { switchSound, switchMusic } from "../../actions";
 import useSound from "use-sound";
-import { useEffect } from "react";
+// import { useEffect, useState } from "react";
 const Auth = () => {
   const audioControl = useSelector((state) => state.audioControl);
   const { music, sound, btnClickAudio } = audioControl;
-
   const [playBtnClickAudio] = useSound(btnClickAudio);
-
   const dispatch = useDispatch();
-
   const history = useHistory();
+  const user = useSelector((state) => state.user);
+
+  if (user) {
+    return <Redirect to="/lobby" />;
+  }
 
   return (
     <div
@@ -30,10 +31,11 @@ const Auth = () => {
       style={{ backgroundImage: `url(${BackgroundImage})` }}
     >
       <div className="auth-title">Seahorse Chess</div>
+
       <Switch>
         <Route path="/auth/signin" component={Signin} />
         <Route path="/auth/signup" component={Signup} />
-        <Route path="/auth/forgot" component={Forgot} />
+        <Route path="/auth/forgot" component={Forgot} />{" "}
         <Route
           path="/"
           render={() => (
@@ -60,6 +62,7 @@ const Auth = () => {
         />
         <Route path="*" component={() => <Redirect to="/auth" />} />
       </Switch>
+
       <div className="copyright">Copyright © 2021</div>
       <div
         className="control-container setting"
@@ -83,7 +86,10 @@ const Auth = () => {
               backgroundImage: `url(${MusicIcon})`,
               border: `${!music ? "3px solid black" : "3px solid #f6d2e1"}`,
             }}
-            onClick={(e) => dispatch(switchMusic)}
+            onClick={(e) => {
+              sound && playBtnClickAudio();
+              dispatch(switchMusic);
+            }}
           >
             {!music && <div className="off"></div>}
           </button>
@@ -104,13 +110,6 @@ const Auth = () => {
           history.push("/hello");
         }}
       ></div>
-      if(history){" "}
-      {history.location.pathname && (
-        <MessengerCustomerChat
-          pageId="101530238693742"
-          appId="3881449045268897"
-        />
-      )}
     </div>
   );
 };

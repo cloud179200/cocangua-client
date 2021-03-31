@@ -1,27 +1,22 @@
 import { useHistory } from "react-router";
-import BackgroundImage from "../../shared/media/image/background.jpg";
 import "./Introduce.css";
 import { useSelector } from "react-redux";
 import useSound from "use-sound";
 import { motion } from "framer-motion";
+// import { useEffect } from "react";
 
 const Introduce = () => {
   const audioControl = useSelector((state) => state.audioControl);
   const { sound, btnClickAudio } = audioControl;
-
   const [playBtnClickAudio] = useSound(btnClickAudio);
   const history = useHistory();
   const handleStartButtonClick = (e) => {
     sound && playBtnClickAudio();
     history.push("/auth");
   };
+
   return (
-    <div
-      className="introduce"
-      style={{
-        backgroundImage: `url(${BackgroundImage})`,
-      }}
-    >
+    <div className="introduce">
       <div className="banner-title">Seahorse Chess</div>{" "}
       <motion.div
         className="container"
@@ -47,13 +42,14 @@ const Introduce = () => {
           <div
             style={{ textAlign: "left", lineHeight: "20px", fontSize: "18px" }}
           >
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seahorse is a very popular and
-            familiar game in the memories of every Vietnamese people. Certainly
-            just mentioning seahorse chess, anyone from a young age has since
-            playing through this game not only once but many times, from
-            gardens, parks or public people, just over 1 paragraph. The ground
-            is enough to place the chess board, that is more than enough for a
-            competition of only 2-4 people that you entertain together. Over all
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Seahorse chess is a very popular
+            and familiar game in the memories of every Vietnamese people.
+            Certainly just mentioning seahorse chess, anyone from a young age
+            has since playing through this game not only once but many times,
+            from gardens, parks or public place, just with one small place to
+            put the table and you good to go , that is more than enough for a
+            competition of only 2-4 people that you entertain together. <br/><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Over all
             ages, seahorse chess shows its appeal not only in its simple
             gameplay but extremely attractive, but sometimes it is the exciting
             moments when you kick someone's horse back to the barn. Or get

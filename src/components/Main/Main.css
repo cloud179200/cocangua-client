@@ -25,16 +25,16 @@
   background-position: left;
   background-repeat: no-repeat;
 
-  width: 440px;
-  height: 120px;
+  width: 330px;
+  height: 82px;
 
   background-image: url("../../shared//media/image/namebox.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: flex-start;
   align-items: center;
-
-  padding-left: 3%;
-  margin-left: -2%;
 }
 .main-avatar {
   background-color: #ffd185;
@@ -42,14 +42,19 @@
   width: 60px;
   height: 60px;
 
-  margin-bottom: 5%;
+  margin-bottom: 2%;
   margin-left: 5%;
 }
-.main-username {
-  margin-left: 15%;
-  margin-bottom: 5%;
-  max-width: 150px;
-  word-break: keep-all;
+.main-username-id {
+  margin: 2%;
+}
+.main-username-id div:first-child {
+  border-bottom: 2px solid #7e55f3;
+}
+.main-username-id div {
+  width: 150px;
+  padding: 2px;
+  text-align: center;
 }
 .main-title {
   color: #47525e;
@@ -161,31 +166,27 @@
   display: flex;
   align-items: center;
   width: 100%;
-  height: 72%;
+  height: 70%;
   padding: 0 1%;
 }
 .friends-box {
-  width: 180px;
-  height: 100%;
-  font-size: 24px;
+  width: 100px;
+  height: 80%;
+  font-size: 20px;
 
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 
   background-image: url("../../shared//media//image/background_friendsbox.png");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: initial;
-}
-.friends-box div {
-  margin-right: 30px;
-  margin-top: 20px;
+  background-size: cover;
 }
 .friend {
-  width: 80%;
-  height: 20%;
+  width: 75%;
+  height: 18%;
   background-image: url("../../shared/media/image/background_sqare.png");
   background-position: center;
   background-size: cover;
@@ -194,11 +195,11 @@
   justify-content: center;
   align-items: center;
 }
-.friend-avatar{
+.friend-avatar {
   margin: 0 !important;
-  width: 80px;
-  height: 80px;
-  background-color: #FFD185;
+  width: 50px;
+  height: 50px;
+  background-color: #ffd185;
 }
 .waifu {
   width: 50%;
@@ -238,6 +239,12 @@
 
   cursor: pointer;
 }
+.main-control-item:first-child {
+  background-image: url("../../shared/media/image/button_green.png");
+}
+.main-control-item:last-child {
+  background-image: url("../../shared/media/image/button_pink.png");
+}
 .main-control-item:hover {
   color: white;
 }
@@ -259,7 +266,6 @@
   right: 2%;
   bottom: 2%;
 
-
   font-size: 18px;
   padding-left: 10px;
   padding-top: 10px;
@@ -275,12 +281,11 @@
 
   cursor: pointer;
 }
-.rooms{
+.rooms {
   width: 100%;
   height: 100%;
 }
-.back-lobby{
-
+.back-lobby {
   width: 80px;
   height: 80px;
 
@@ -297,38 +302,38 @@
   justify-content: center;
   align-items: center;
 }
-.back-lobby-icon{
+.back-lobby-icon {
   width: 60%;
   height: 60%;
-  
+
   background-image: url("../../shared/media/image/backlobby.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.rooms-control{
+.rooms-control {
   display: flex;
   padding-top: 5%;
   justify-content: space-evenly;
   justify-items: center;
 }
-.rooms-control div button{
+.rooms-control div button {
   font-family: "Sensei" !important;
   font-size: 24px !important;
 }
-.find-box div input{
+.find-box div input {
   background-color: rgb(70, 81, 93, 0.3) !important;
   color: white !important;
   font-family: "Sensei" !important;
   font-size: 24px !important;
 }
-.rooms-main{
+.rooms-main {
   width: 100%;
   height: 50%;
   margin-top: 2%;
 }
-.rooms-main div{
+.rooms-main div {
   height: 15%;
   width: 100%;
   display: flex;
@@ -341,7 +346,7 @@
   justify-content: center;
   align-items: center;
 }
-.title-row{
+.title-row {
   font-size: 20px;
 
   background-image: url("../../shared/media/image/background_titlerow.png");
@@ -350,7 +355,7 @@
   background-size: auto;
 }
 
-.item-row{
+.item-row {
   font-size: 18px;
 
   background-image: url("../../shared/media/image/background_itemrow.png");
@@ -359,3 +364,53 @@
   background-size: cover;
 }
 
+.modal{
+  background-color: rgba(255, 255, 255, 0.65) !important;
+  border: 5px solid #E064C8 !important;
+  width: 35% !important;
+  height: 60% !important;
+  display: flex;
+  font-family: "Sensei";
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modal div{
+  width: 100%;
+}
+.modal-head{
+  font-size: 48px;
+  border-bottom: 3px solid #F480DD;
+  text-align: center;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+.modal-body{
+  display: flex;
+  padding-top: 20px;
+  height: 60%;
+}
+.modal-body div{
+  display: flex;
+  flex-direction: column;
+}
+.main-body-avatar{
+  background-image: url("../../shared/media/image/background_sqare.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  
+  width: 100px;
+  height: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-body-avatar:first-child{
+  width: 80%;
+  height: 80%;
+}

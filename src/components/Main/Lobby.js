@@ -5,11 +5,11 @@ import backgroundSettingImage from "../../shared/media/image/background_setting.
 import SettingIcon from "../../shared/media/image/setting.png";
 import SoundIcon from "../../shared/media/image/sound.png";
 import MusicIcon from "../../shared/media/image/music.png";
-import ButtonGreenImage from "../../shared/media/image/button_green.png";
-import ButtonPinkImage from "../../shared/media/image/button_pink.png";
 import WaifuImage from "../../shared/media/image/waifu.png";
-import { loadInfoUser, switchMusic, switchSound } from "../../actions/index";
+import { loadUser, switchMusic, switchSound } from "../../actions/index";
 import { useHistory } from "react-router-dom";
+import { Modal } from "semantic-ui-react";
+import { useRef, useState } from "react";
 
 const openInNewTab = (url) => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
@@ -74,8 +74,8 @@ const MainSetting = () => {
               className="main-menu-setting-item-btn"
               style={{ flexBasis: "100%" }}
               onClick={() => {
-                localStorage.removeItem("auth_token");
-                dispatch(loadInfoUser());
+                localStorage.removeItem("token_seahorsechessapp");
+                dispatch(loadUser());
               }}
             >
               Sign out
@@ -92,12 +92,57 @@ const Lobby = () => {
   const { sound, btnClickAudio } = audioControl;
   const [playBtnClickAudio] = useSound(btnClickAudio);
   const history = useHistory();
+  const [modal, setModal] = useState({
+    infoUser: false,
+  });
+  const nameBox = useRef();
   return (
     <>
+      <Modal open={!modal.infoUser} className="modal info-user">
+        <span
+          className="back-main-switch"
+          onClick={() => {
+            sound && playBtnClickAudio();
+            setModal({ ...modal, infoUser: !modal.infoUser });
+          }}
+        >
+          X
+        </span>
+        <div className="modal-head">Profile</div>
+        <div className="modal-body">
+          <div>
+            <div className="main-body-avatar">
+              <div></div>
+            </div>
+            <div className="modal-body-name-id">name/id</div>
+          </div>
+          <div>
+            <div>Email</div>
+            <div>Gender</div>
+          </div>
+        </div>
+        <div className="modal-foot">
+          <button></button>
+        </div>
+      </Modal>
+      {/* <Modal
+        onClose={() => setModal({ ...modal, in: true })}
+        onOpen={() => setModal({ ...modal, infoUser: false })}
+        open={modal.infoUser}
+        className="modal change-avatar"
+      ></Modal> */}
       <div className="main-head">
-        <div className="name-box">
-          <div className="main-avatar"></div>
-          <div className="main-username">DancePhug waifu</div>
+        <div
+          className="name-box"
+          onClick={() => {
+            setModal({ ...modal, infoUser: !modal.infoUser });
+          }}
+        >
+          <div className="main-avatar" ref={nameBox}></div>
+          <div className="main-username-id">
+            <div>name</div>
+            <div>id</div>
+          </div>
         </div>
         <div className="main-title">Seahorse WebGame</div>
       </div>
@@ -111,8 +156,6 @@ const Lobby = () => {
         <div className="main-control">
           <div
             className="main-control-item"
-            style={{ backgroundImage: `url(${ButtonGreenImage})` }}
-            F
             onClick={() => {
               sound && playBtnClickAudio();
               history.push("/lobby/join");
@@ -122,7 +165,6 @@ const Lobby = () => {
           </div>
           <div
             className="main-control-item"
-            style={{ backgroundImage: `url(${ButtonPinkImage})` }}
             onClick={() => {
               sound && playBtnClickAudio();
               history.push("/lobby/join");
@@ -136,7 +178,16 @@ const Lobby = () => {
         <div className="copyright">
           Copyright © 2021 | Design by Nguyen Minh An
         </div>
-        <div className="visit-fanpage" onClick={() => openInNewTab("https://www.facebook.com/SeaHorse-Game-101530238693742")}>Visit Fanpage</div>
+        <div
+          className="visit-fanpage"
+          onClick={() =>
+            openInNewTab(
+              "https://www.facebook.com/SeaHorse-Game-101530238693742"
+            )
+          }
+        >
+          Visit Fanpage
+        </div>
       </div>
     </>
   );

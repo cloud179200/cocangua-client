@@ -2,10 +2,14 @@ import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
+import { loadUser, addNotificationMessage } from "../../actions";
+import axios from "../../shared/axios/axios";
 import { motion } from "framer-motion";
-import { loadInfoUser, setNotificationMessage } from "../../actions";
-import axios from "axios";
-const Signin = () => {
+import Loading from "../shared/Loading";
+
+const Signin = (props) => {
+  const [loading, setLoading] = useState(false);
+
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -19,40 +23,36 @@ const Signin = () => {
   const handleInputChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
-  const handleSignInBtnClick = (e) => {
+  const handleSignInFormSubmit = (e) => {
     e.preventDefault();
     sound && playBtnClickAudio();
     const { username, password } = state;
     const usernameVerify = username.trim();
-    if (usernameVerify && password) {
-      const data = JSON.stringify({
-        username: usernameVerify,
-        password: password,
-      });
-
-      const config = {
-        method: "post",
-        url: "http://localhost:4000/api/signin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: data,
-      };
-
-      axios(config)
-        .then(function (response) {
-          const { auth_token } = response.data;
-          localStorage.setItem("auth_token", auth_token);
-          dispatch(loadInfoUser(auth_token));
+    const data = JSON.stringify({
+      username: usernameVerify,
+      password: password,
+    });
+    if (usernameVerify.length < 1 || password.length < 1)
+      dispatch(addNotificationMessage("Please fill info!", true));
+    else {
+      setLoading(true);
+      axios
+        .post("/api/signin", data)
+        .then((res) => {
+          const { token, status, message } = res.data;
+          if (token) {
+            localStorage.setItem("token_seahorsechessapp", token);
+            dispatch(loadUser());
+          }
+          status === "error" && dispatch(addNotificationMessage(message, true));
         })
-        .catch(function (error) {
-          console.log(error);
-          dispatch(setNotificationMessage(""));
+        .catch((err) => {
+          setLoading(false);
+          dispatch(addNotificationMessage(err, true));
         });
-    } else {
-      dispatch(setNotificationMessage("Please fill info!"));
     }
   };
+
   return (
     <motion.div
       className="container"
@@ -65,79 +65,54 @@ const Signin = () => {
       }}
     >
       <div className="sign-container">
-        <form>
-          <span
-            className="back-main-switch"
-            onClick={() => {
-              sound && playBtnClickAudio();
-              history.push("/auth");
-            }}
-          >
-            X
-          </span>
-          <div>
-            <label>Username:</label>
-            <input
-              name="username"
-              type="text"
-              onChange={handleInputChange}
-              value={state.username}
-            ></input>
-          </div>
-          <div>
-            <label>Password:</label>
-            <input
-              name="password"
-              type="password"
-              onChange={handleInputChange}
-              value={state.password}
-            ></input>
-          </div>
-          <div className="check-remember-and-forgot-password">
-            <div
-              className="check-remember"
-              onClick={() =>
-                setState({
-                  ...state,
-                  rememberPassword: !state.rememberPassword,
-                })
-              }
+        {loading ? (
+          <Loading />
+        ) : (
+          <form onSubmit={handleSignInFormSubmit}>
+            <span
+              className="back-main-switch"
+              onClick={() => {
+                sound && playBtnClickAudio();
+                history.push("/auth");
+              }}
             >
+              X
+            </span>
+            <div>
+              <label>Username:</label>
               <input
-                type="checkbox"
-                name="rememberPassword"
-                checked={state.rememberPassword}
-                onChange={(e) =>
-                  setState({ ...state, rememberPassword: e.target.checked })
-                }
-              />
-              <div
-                onChange={() => {
-                  sound && playBtnClickAudio();
-                  setState({
-                    ...state,
-                    rememberPassword: !state.rememberPassword,
-                  });
-                }}
-              >
-                Remember me
+                name="username"
+                type="text"
+                onChange={handleInputChange}
+                value={state.username}
+              ></input>
+            </div>
+            <div>
+              <label>Password:</label>
+              <input
+                name="password"
+                type="password"
+                onChange={handleInputChange}
+                value={state.password}
+              ></input>
+            </div>
+            <div className="check-remember-and-forgot-password">
+              <div className="forgot-password">
+                <Link to="/auth/forgot">Forgot password?</Link>
+              </div>
+              <div className="forgot-password">
+                <Link to="/auth/signup">Dont have account?</Link>
               </div>
             </div>
-            <div className="forgot-password">
-              <Link to="/auth/forgot">Forgot password?</Link>
-            </div>
-            <div className="forgot-password">
-              <Link to="/auth/signup">Dont have account?</Link>
-            </div>
-          </div>
-          <button
-            onClick={handleSignInBtnClick}
-            type="button"
-            className="sign-btn"
-          >
-            Sign In
-          </button>
-        </form>
+            <button
+              onClick={handleSignInFormSubmit}
+              type="submit"
+              className="sign-btn"
+            >
+              Sign In
+            </button>
+          </form>
+        )}
       </div>
     </motion.div>
   );

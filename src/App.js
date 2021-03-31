@@ -3,46 +3,43 @@ import {
   Redirect,
   Route,
   Switch,
-  useHistory,
 } from "react-router-dom";
 import Auth from "./components/Auth/Auth";
 import Introduce from "./components/Introduce/Introduce";
 import ReactHowler from "react-howler";
 import { useDispatch, useSelector } from "react-redux";
 import introAudio from "./shared/media/audio/intro.mp3";
+import MessengerCustomerChat from "react-messenger-customer-chat";
 import Main from "./components/Main/Main";
-import { Message } from "semantic-ui-react";
 import { useEffect } from "react";
-import { setNotificationMessage } from "./actions/index";
-import { loadInfoUser } from "./actions";
+import { addNotificationMessage, loadUser } from "./actions";
+import NotificationMessage from "./shared/notificationMessenger/NotificationMessenger";
+
 const App = () => {
   const { music } = useSelector((state) => state.audioControl);
-  const { message } = useSelector((state) => state.notificationMessage);
-  const { username } = useSelector((state) => state.logged);
-
+  const { messages } = useSelector((state) => state.notificationMessage);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const history = useHistory();
+  const messagesRender = [...messages].map((message) => (
+    <NotificationMessage
+      key={message.id}
+      idMessage={message.id}
+      content={message.content}
+      error={message.error}
+    />
+  ));
   useEffect(() => {
-    const auth_token = localStorage.getItem("auth_token");
-    // history && console.log(history.location.pathname);
-    // if (auth_token) {
-    //   dispatch(loadInfoUser());
-    // } else if (!auth_token) {
-    //   dispatch(loadInfoUser());
-    //   if (username && history.location.pathname.indexOf("/lobby") === -1) {
-    //     history.push("/lobby");
-    //   }
-    //   if (!username && history.location.pathname.indexOf("/lobby") !== -1) {
-    //     history.push("/auth/signin");
-    //   }
-    // }
-    const displayMessage = setTimeout(() => {
-      dispatch(setNotificationMessage(""));
-    }, 5000);
-    return () => {
-      clearTimeout(displayMessage);
-    };
-  }, [message, username]);
+    const token = localStorage.getItem("token_seahorsechessapp");
+    if (token) {
+      !user && dispatch(loadUser());
+      if (user) {
+        dispatch(addNotificationMessage("Signin success", false));
+        return <Redirect to="/lobby" />;
+      }
+    }
+    // !token && dispatch(addNotificationMessage("Signin fail!", true));
+  }, []);
+
   return (
     <BrowserRouter>
       <div className="App" style={{ width: "100%", height: "100vh" }}>
@@ -52,24 +49,24 @@ const App = () => {
           <Route path="/lobby" component={Main} />
           <Route path="*" component={() => <Redirect to="/hello" />} />
         </Switch>
-        <ReactHowler
-          src={introAudio}
-          volume={0.2}
-          onLoadError={() => console.log("error")}
-          onPlay={() => {
-            console.log("play");
-          }}
-          playing={true}
-          mute={music ? false : true}
-          loop={true}
-        />
-        {message !== "" && (
-          <Message info>
-            <Message.Header>Notification</Message.Header>
-            <p>{message}</p>
-          </Message>
-        )}
       </div>
+
+      <ReactHowler
+        src={introAudio}
+        volume={0.2}
+        onLoadError={() => console.log("error")}
+        onPlay={() => {
+          console.log("play music");
+        }}
+        playing={true}
+        mute={music ? false : true}
+        loop={true}
+      />
+      <div className="notification-messages">{messagesRender}</div>
+      <MessengerCustomerChat
+        pageId="101530238693742"
+        appId="3881449045268897"
+      />
     </BrowserRouter>
   );
 };

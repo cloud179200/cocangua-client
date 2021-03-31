@@ -2,9 +2,18 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import "./Main.css";
 import Lobby from "./Lobby";
 import Rooms from "./Rooms";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addNotificationMessage } from "../../actions";
 
 const Main = () => {
+  const user = useSelector((state) => state.user);
+
+  const dispatch = useDispatch();
+
+  if (!user) {
+    dispatch(addNotificationMessage("Please signin first", true));
+    return <Redirect to="/auth/signin" />;
+  }
   return (
     <div className="main">
       <Switch>
