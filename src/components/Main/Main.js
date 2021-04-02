@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route, Redirect} from "react-router-dom";
 import "./Main.css";
 import Lobby from "./Lobby";
 import Rooms from "./Rooms";
@@ -7,11 +7,9 @@ import { addNotificationMessage } from "../../actions";
 
 const Main = () => {
   const user = useSelector((state) => state.user);
-
   const dispatch = useDispatch();
-
   if (!user) {
-    dispatch(addNotificationMessage("Please signin first", true));
+    dispatch(addNotificationMessage("Signout success!", false));
     return <Redirect to="/auth/signin" />;
   }
   return (

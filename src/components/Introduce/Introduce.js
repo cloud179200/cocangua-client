@@ -1,4 +1,4 @@
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import "./Introduce.css";
 import { useSelector } from "react-redux";
 import useSound from "use-sound";
@@ -9,12 +9,16 @@ const Introduce = () => {
   const audioControl = useSelector((state) => state.audioControl);
   const { sound, btnClickAudio } = audioControl;
   const [playBtnClickAudio] = useSound(btnClickAudio);
+  const user = useSelector(state => state.user);
   const history = useHistory();
   const handleStartButtonClick = (e) => {
     sound && playBtnClickAudio();
     history.push("/auth");
   };
 
+  if(user){
+    return <Redirect to="/lobby"/>
+  }
   return (
     <div className="introduce">
       <div className="banner-title">Seahorse Chess</div>{" "}

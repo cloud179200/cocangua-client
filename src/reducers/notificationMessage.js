@@ -29,6 +29,7 @@ const notificationMessageReducer = (
         error: action.error,
       });
       return {
+        ...state,
         messages: newMessages,
       };
     case "remove/notificationMessage":
@@ -36,10 +37,11 @@ const notificationMessageReducer = (
         (message) => message.id !== action.id
       );
       return {
+        ...state,
         messages: afterRemovedMessages,
       };
     default:
-      return { ...state };
+      return {...state};
   }
 };
 

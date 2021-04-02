@@ -6,10 +6,10 @@ import SettingIcon from "../../shared/media/image/setting.png";
 import SoundIcon from "../../shared/media/image/sound.png";
 import MusicIcon from "../../shared/media/image/music.png";
 import WaifuImage from "../../shared/media/image/waifu.png";
-import { loadUser, switchMusic, switchSound } from "../../actions/index";
+import { removeUser, switchMusic, switchSound } from "../../actions/index";
 import { useHistory } from "react-router-dom";
 import { Modal } from "semantic-ui-react";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const openInNewTab = (url) => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
@@ -21,7 +21,6 @@ const MainSetting = () => {
   const dispatch = useDispatch();
   const { music, sound, btnClickAudio } = audioControl;
   const [playBtnClickAudio] = useSound(btnClickAudio);
-
   return (
     <div
       className="main-setting-container"
@@ -75,7 +74,7 @@ const MainSetting = () => {
               style={{ flexBasis: "100%" }}
               onClick={() => {
                 localStorage.removeItem("token_seahorsechessapp");
-                dispatch(loadUser());
+                dispatch(removeUser());
               }}
             >
               Sign out
@@ -92,13 +91,16 @@ const Lobby = () => {
   const { sound, btnClickAudio } = audioControl;
   const [playBtnClickAudio] = useSound(btnClickAudio);
   const history = useHistory();
+  const { id, username, email, gender, avatar, wins } = useSelector(
+    (state) => state.user
+  );
   const [modal, setModal] = useState({
     infoUser: false,
+    setAvatar: false,
   });
-  const nameBox = useRef();
   return (
     <>
-      <Modal open={!modal.infoUser} className="modal info-user">
+      <Modal open={modal.infoUser} className="modal info-user">
         <span
           className="back-main-switch"
           onClick={() => {
@@ -110,45 +112,64 @@ const Lobby = () => {
         </span>
         <div className="modal-head">Profile</div>
         <div className="modal-body">
-          <div>
-            <div className="main-body-avatar">
+          <div className="modal-avatar-and-info">
+            <div
+              onClick={() => {
+                sound && playBtnClickAudio();
+                setModal({
+                  ...modal,
+                  setAvatar: !modal.setAvatar,
+                  infoUser: !modal.infoUser,
+                });
+              }}
+            >
               <div></div>
             </div>
-            <div className="modal-body-name-id">name/id</div>
+            <div>
+              <div>Email: {email}</div>
+              <div>Gender: {gender ? "Male" : "Female"}</div>
+              <div>Wins: {wins}</div>
+            </div>
           </div>
-          <div>
-            <div>Email</div>
-            <div>Gender</div>
+          <div className="modal-username-and-id">
+            <div>{username}</div>
+            <div>{id}</div>
           </div>
         </div>
         <div className="modal-foot">
-          <button></button>
+          <button>Submit</button>
         </div>
       </Modal>
-      {/* <Modal
-        onClose={() => setModal({ ...modal, in: true })}
-        onOpen={() => setModal({ ...modal, infoUser: false })}
-        open={modal.infoUser}
-        className="modal change-avatar"
-      ></Modal> */}
+      <Modal open={modal.setAvatar} className="modal change-avatar">
+        <span
+          className="back-main-switch"
+          onClick={() => {
+            sound && playBtnClickAudio();
+            setModal({ ...modal, infoUser: !modal.infoUser, setAvatar: !modal.setAvatar });
+          }}
+        >
+          X
+        </span>
+      </Modal>
       <div className="main-head">
         <div
           className="name-box"
           onClick={() => {
+            sound && playBtnClickAudio();
             setModal({ ...modal, infoUser: !modal.infoUser });
           }}
         >
-          <div className="main-avatar" ref={nameBox}></div>
+          <div className="main-avatar"></div>
           <div className="main-username-id">
-            <div>name</div>
-            <div>id</div>
+            <div>{username}</div>
+            <div>{id}</div>
           </div>
         </div>
         <div className="main-title">Seahorse WebGame</div>
       </div>
       <MainSetting />
       <div className="main-body">
-        <FriendsBox />
+        {/* <FriendsBox /> */}
         <div
           className="waifu"
           style={{ backgroundImage: `url(${WaifuImage})` }}
@@ -180,11 +201,12 @@ const Lobby = () => {
         </div>
         <div
           className="visit-fanpage"
-          onClick={() =>
+          onClick={() => {
+            sound && playBtnClickAudio();
             openInNewTab(
               "https://www.facebook.com/SeaHorse-Game-101530238693742"
-            )
-          }
+            );
+          }}
         >
           Visit Fanpage
         </div>

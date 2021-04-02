@@ -64,17 +64,19 @@ const Signup = (props) => {
         .post("/api/signup", data)
         .then((res) => {
           setLoading(false);
-          const {status, message} = res.data;
-          console.log(res.data);
-          if(status === "success"){
+          const { status, message } = res.data;
+          if (status === "success") {
             dispatch(addNotificationMessage(message, false));
-            history.push("/auth/signin")
+            history.push("/auth/signin");
           }
-          status === "error" && dispatch(addNotificationMessage(message, true));
+          if (status === "error") {
+            setLoading(false);
+            dispatch(addNotificationMessage(message, true));
+          }
         })
         .catch((err) => {
           setLoading(false);
-          dispatch(addNotificationMessage(err, true));
+          dispatch(addNotificationMessage(err.message, true));
         });
     }
   };

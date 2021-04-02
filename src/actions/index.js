@@ -35,15 +35,19 @@ export const loadUser = () => {
           }
         })
         .catch((error) => {
-          dispatch(setUser(null));
           localStorage.removeItem("token_seahorsechessapp");
         });
-    }
+    } else dispatch(setUser(null));
   };
 };
 export const setUser = (data) => {
   return {
     type: "set/user",
     data: data,
+  };
+};
+export const removeUser = () => {
+  return {
+    type: "remove/user",
   };
 };

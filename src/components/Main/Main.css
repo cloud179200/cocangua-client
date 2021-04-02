@@ -35,6 +35,8 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  cursor: pointer;
 }
 .main-avatar {
   background-color: #ffd185;
@@ -42,6 +44,7 @@
   width: 60px;
   height: 60px;
 
+  border: 2px solid #f7ae39;
   margin-bottom: 2%;
   margin-left: 5%;
 }
@@ -168,6 +171,7 @@
   width: 100%;
   height: 70%;
   padding: 0 1%;
+  padding-left: 10%;
 }
 .friends-box {
   width: 100px;
@@ -364,53 +368,118 @@
   background-size: cover;
 }
 
-.modal{
+.modal {
   background-color: rgba(255, 255, 255, 0.65) !important;
-  border: 5px solid #E064C8 !important;
-  width: 35% !important;
-  height: 60% !important;
+  border: 5px solid #e064c8 !important;
+  width: 600px !important;
+  height: 550px !important;
   display: flex;
   font-family: "Sensei";
   padding: 5%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
-.modal div{
+.modal div {
   width: 100%;
 }
-.modal-head{
+
+.modal-head {
   font-size: 48px;
-  border-bottom: 3px solid #F480DD;
+  border-bottom: 3px solid #f480dd;
   text-align: center;
   margin-right: 20px;
   margin-left: 20px;
+  height: 20%;
 }
-.modal-body{
-  display: flex;
-  padding-top: 20px;
-  height: 60%;
-}
-.modal-body div{
+.modal-body {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 65%;
+  padding-top: 5%;
 }
-.main-body-avatar{
+.modal-avatar-and-info {
+  height: 100%;
+  width: 100% !important;
+  display: flex;
+}
+.modal-avatar-and-info div div {
+  cursor: pointer;
+}
+.modal-avatar-and-info div:first-child {
+  width: 60%;
   background-image: url("../../shared/media/image/background_sqare.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
-  
-  width: 100px;
-  height: 100px;
-
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.main-body-avatar:first-child{
+.modal-avatar-and-info div:last-child {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.modal-avatar-and-info div:last-child div {
+  width: 200px !important;
+  height: 40px;
+  background-image: url("../../shared/media/image/textbox.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-left: 20px;
+}
+.modal-avatar-and-info div:first-child div {
+  background-color: #ffd185;
   width: 80%;
   height: 80%;
+  background-image: none;
+}
+.modal-avatar-and-info div div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-username-and-id {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  padding-left: 10px;
+  width: 50% !important;
+}
+.modal-username-and-id div {
+  text-align: start;
+  font-size: 22px;
+}
+.modal-username-and-id div:first-child {
+  border-bottom: 3px solid #7e55f3;
+}
+.modal-foot{
+  padding-top: 5%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-foot button{
+  outline: none;
+  border: none;
+  background: none;
+  font-family: "Sensei";
+  font-size: 24px;
+  width: 200px;
+  height: 66px;
+
+  background-image: url("../../shared/media/image/button_modal.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  transition: .3s;
+}
+.modal-foot button:hover{
+  color: white;
 }

@@ -5,6 +5,6 @@ import { combineReducers } from "redux";
 
 export default combineReducers({
   audioControl: audioControlReducer,
+  user: userReducer,
   notificationMessage: notificationMessageReducer,
-  user: userReducer
 });

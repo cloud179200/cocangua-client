@@ -20,6 +20,7 @@ const Signin = (props) => {
   const [playBtnClickAudio] = useSound(btnClickAudio);
   const history = useHistory();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
   const handleInputChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
@@ -43,12 +44,17 @@ const Signin = (props) => {
           if (token) {
             localStorage.setItem("token_seahorsechessapp", token);
             dispatch(loadUser());
+            dispatch(addNotificationMessage("Successfully signin", false));
+            setLoading(false);
           }
-          status === "error" && dispatch(addNotificationMessage(message, true));
+          if (status === "error") {
+            setLoading(false);
+            dispatch(addNotificationMessage(message, true));
+          }
         })
         .catch((err) => {
           setLoading(false);
-          dispatch(addNotificationMessage(err, true));
+          dispatch(addNotificationMessage(err.message, true));
         });
     }
   };

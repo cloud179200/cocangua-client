@@ -14,7 +14,8 @@ const Forgot = (props) => {
     key: "",
     password: "",
     confirmPassword: "",
-    code:""
+    code: "",
+    onFormGetCode: true,
   });
   const audioControl = useSelector((state) => state.audioControl);
   const { sound, btnClickAudio } = audioControl;
@@ -28,27 +29,70 @@ const Forgot = (props) => {
     e.preventDefault();
     const { username } = state;
     if (username.length < 1)
-      dispatch(
-        addNotificationMessage(
-          "Please fill info!",
-          true
-        )
-      );
+      dispatch(addNotificationMessage("Please fill info!", true));
     else {
-      // axios.post()
-      dispatch(addNotificationMessage("Code sent to your email", false));
       setLoading(true);
-      setLoading(false);
+      const data = JSON.stringify({ username: username });
+      axios
+        .post("/api/resetPasswordRequest", data)
+        .then((res) => {
+          const { status, message } = res.data;
+          setLoading(false);
+          setState({ ...state, onFormGetCode: !state.onFormGetCode });
+          if (status === "success") {
+            dispatch(addNotificationMessage("Code sent to your email", false));
+          }
+          status === "error" && dispatch(addNotificationMessage(message, true));
+        })
+        .catch((err) => {
+          setLoading(false);
+          dispatch(addNotificationMessage(err.message, true));
+        });
     }
   };
   const handleChangePasswordFormSubmit = (e) => {
     e.preventDefault();
-    const {username, password, confirmPassword, code} = state;
-    setLoading(true);
-    if(username.length < 1 || password.length < 1 || confirmPassword.length < 1 || code.length < 1) dispatch(addNotificationMessage("Please fill info!", true));
-    else if (password !== confirmPassword) dispatch(addNotificationMessage("Confirm password not correct!", true));
-    else if (password < 8)  dispatch(addNotificationMessage("Username, Password should be more than 8 characters!", true));
-    setLoading(false);
+    const { username, password, confirmPassword, code } = state;
+    if (
+      username.length < 1 ||
+      password.length < 1 ||
+      confirmPassword.length < 1 ||
+      code.length < 1
+    )
+      dispatch(addNotificationMessage("Please fill info!", true));
+    else if (password !== confirmPassword)
+      dispatch(addNotificationMessage("Confirm password not correct!", true));
+    else if (password < 8)
+      dispatch(
+        addNotificationMessage(
+          "Password should be more than 8 characters!",
+          true
+        )
+      );
+    else {
+      setLoading(true);
+
+      const data = JSON.stringify({
+        username: username,
+        password: password,
+        key: code,
+      });
+      axios
+        .post("/api/resetPasswordConfirm", data)
+        .then((res) => {
+          setLoading(false);
+          const { status, message } = res.data;
+          if (status === "success") {
+            dispatch(addNotificationMessage(message, false));
+            history.push("/auth/signin");
+          }
+          status === "error" && dispatch(addNotificationMessage(message, true));
+        })
+        .catch((err) => {
+          setLoading(false);
+          dispatch(addNotificationMessage(err.message, true));
+        });
+    }
   };
   return (
     <motion.div
@@ -64,13 +108,13 @@ const Forgot = (props) => {
       <div className="sign-container">
         {loading ? (
           <Loading />
-        ) : state.key === "" ? (
+        ) : state.onFormGetCode ? (
           <form onSubmit={handleGetCodeFormSubmit}>
             <span
               className="back-main-switch"
               onClick={() => {
                 sound && playBtnClickAudio();
-                history.push("/auth");
+                state.onFormGetCode ? history.push("/auth"): setState({...state, onFormGetCode: !state.onFormGetCode});
               }}
             >
               X
@@ -109,7 +153,7 @@ const Forgot = (props) => {
               <input
                 name="username"
                 type="text"
-                onChange={handleInputChange}
+                onChange={() => {}}
                 value={state.username}
               ></input>
             </div>

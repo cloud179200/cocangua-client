@@ -17,7 +17,7 @@ body {
   position: fixed;
   right: 2%;
   bottom: 2%;
-  width: 200px;
+  min-width: 200px;
 }
 .ui.message{
     margin-bottom: 20px !important;

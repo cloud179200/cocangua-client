@@ -1,9 +1,4 @@
-import {
-  BrowserRouter,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import Auth from "./components/Auth/Auth";
 import Introduce from "./components/Introduce/Introduce";
 import ReactHowler from "react-howler";
@@ -12,14 +7,25 @@ import introAudio from "./shared/media/audio/intro.mp3";
 import MessengerCustomerChat from "react-messenger-customer-chat";
 import Main from "./components/Main/Main";
 import { useEffect } from "react";
-import { addNotificationMessage, loadUser } from "./actions";
+import { addNotificationMessage, loadUser, removeUser } from "./actions";
 import NotificationMessage from "./shared/notificationMessenger/NotificationMessenger";
-
+import { io } from "socket.io-client";
 const App = () => {
   const { music } = useSelector((state) => state.audioControl);
   const { messages } = useSelector((state) => state.notificationMessage);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  const options = {
+    rememberUpgrade: true,
+    secure: true,
+    rejectUnauthorized: false,
+  };
+  const socket = io.connect("https://shangans.com/api/socket", options);
+  socket.on("chat-message", (data) => {
+    console.log(data);
+  });
+
   const messagesRender = [...messages].map((message) => (
     <NotificationMessage
       key={message.id}
@@ -28,6 +34,7 @@ const App = () => {
       error={message.error}
     />
   ));
+
   useEffect(() => {
     const token = localStorage.getItem("token_seahorsechessapp");
     if (token) {
@@ -36,8 +43,9 @@ const App = () => {
         dispatch(addNotificationMessage("Signin success", false));
         return <Redirect to="/lobby" />;
       }
+    } else {
+      dispatch(removeUser());
     }
-    // !token && dispatch(addNotificationMessage("Signin fail!", true));
   }, []);
 
   return (
