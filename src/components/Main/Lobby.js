@@ -150,6 +150,7 @@ const Lobby = () => {
         >
           X
         </span>
+        <div className="modal-head">Change your avatar</div>
       </Modal>
       <div className="main-head">
         <div

@@ -12,6 +12,7 @@ import "./Auth.css";
 import { useSelector, useDispatch } from "react-redux";
 import { switchSound, switchMusic } from "../../actions";
 import useSound from "use-sound";
+import MessengerCustomerChat from "react-messenger-customer-chat";
 // import { useEffect, useState } from "react";
 const Auth = () => {
   const audioControl = useSelector((state) => state.audioControl);
@@ -110,6 +111,10 @@ const Auth = () => {
           history.push("/hello");
         }}
       ></div>
+       <MessengerCustomerChat
+        pageId="101530238693742"
+        appId="3881449045268897"
+      />
     </div>
   );
 };

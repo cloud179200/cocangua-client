@@ -4,7 +4,6 @@ import Introduce from "./components/Introduce/Introduce";
 import ReactHowler from "react-howler";
 import { useDispatch, useSelector } from "react-redux";
 import introAudio from "./shared/media/audio/intro.mp3";
-import MessengerCustomerChat from "react-messenger-customer-chat";
 import Main from "./components/Main/Main";
 import { useEffect } from "react";
 import { addNotificationMessage, loadUser, removeUser } from "./actions";
@@ -64,10 +63,6 @@ const App = () => {
         loop={true}
       />
       <div className="notification-messages">{messagesRender}</div>
-      <MessengerCustomerChat
-        pageId="101530238693742"
-        appId="3881449045268897"
-      />
     </BrowserRouter>
   );
 };

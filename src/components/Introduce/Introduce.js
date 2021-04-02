@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import useSound from "use-sound";
 import { motion } from "framer-motion";
 // import { useEffect } from "react";
+import MessengerCustomerChat from "react-messenger-customer-chat";
+
 
 const Introduce = () => {
   const audioControl = useSelector((state) => state.audioControl);
@@ -65,6 +67,10 @@ const Introduce = () => {
         </div>
       </motion.div>
       <div className="copyright">Copyright © 2021</div>
+      <MessengerCustomerChat
+        pageId="101530238693742"
+        appId="3881449045268897"
+      />
     </div>
   );
 };
