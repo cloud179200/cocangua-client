@@ -21,11 +21,8 @@ const App = () => {
     secure: true,
     rejectUnauthorized: false,
   };
-  const socket = io.connect("https://shangans.com/api", options);
-  socket.on("chat-message", (data) => {
-    console.log(data);
-  });
-
+  const socket = io("https://shangans.com/api");
+  console.log(socket);
   const messagesRender = [...messages].map((message) => (
     <NotificationMessage
       key={message.id}
