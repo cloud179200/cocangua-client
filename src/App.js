@@ -16,8 +16,8 @@ const App = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const socket = io.connect("http://localhost:8080");
-  console.log(socket);
+  // const socket = io.connect("http://localhost:8080");
+  // console.log(socket);
 
   const messagesRender = [...messages].map((message) => (
     <NotificationMessage
