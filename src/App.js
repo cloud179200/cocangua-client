@@ -21,7 +21,7 @@ const App = () => {
     secure: true,
     rejectUnauthorized: false,
   };
-  const socket = io.connect("https://shangans.com/api/socket", options);
+  const socket = io.connect("https://shangans.com/api", options);
   socket.on("chat-message", (data) => {
     console.log(data);
   });
