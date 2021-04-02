@@ -1,4 +1,5 @@
 {
+  "homepage": "http://cloud179200.github.io/cocangua-client",
   "name": "co-ca-ngua-wreact",
   "version": "0.1.0",
   "private": true,
@@ -9,6 +10,7 @@
     "axios": "^0.21.1",
     "express": "^4.17.1",
     "framer-motion": "^4.0.0",
+    "gh-pages": "^3.1.0",
     "howler": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -29,6 +31,7 @@
   },
   "scripts": {
     "start": "react-dotenv && react-scripts start",
+    "deloy": "gh-pages -d build",
     "build": "react-dotenv && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

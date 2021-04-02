@@ -9,17 +9,15 @@ import Main from "./components/Main/Main";
 import { useEffect } from "react";
 import { addNotificationMessage, loadUser, removeUser } from "./actions";
 import NotificationMessage from "./shared/notificationMessenger/NotificationMessenger";
-import io from "socket.io-client";
+import {io} from "socket.io-client";
 const App = () => {
   const { music } = useSelector((state) => state.audioControl);
   const { messages } = useSelector((state) => state.notificationMessage);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const socket = io("https://shangans.com/api/");
-  socket.on("chat-message", (data) => {
-    console.log(data);
-  });
+  const socket = io.connect("http://localhost:8080");
+  console.log(socket);
 
   const messagesRender = [...messages].map((message) => (
     <NotificationMessage
