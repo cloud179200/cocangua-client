@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import useSound from "use-sound";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,7 +60,7 @@ const Signup = (props) => {
         email: emailVerify,
       });
       axios
-        .post("/api/signup", data)
+        .post("/signup", data)
         .then((res) => {
           setLoading(false);
           const { status, message } = res.data;
@@ -83,6 +83,13 @@ const Signup = (props) => {
     sound && playBtnClickAudio();
     setState({ ...state, gender: !state.gender });
   };
+
+  useEffect(() => {
+    return () => {
+      setLoading(false);
+      setState(null);
+    };
+  }, []);
   return (
     <motion.div
       className="container"

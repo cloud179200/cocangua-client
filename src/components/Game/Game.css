@@ -1,0 +1,46 @@
+.game{
+    width: 100%;
+    height: 100vh;
+    background-image: url("../../shared/media/image/background_pageloading.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.square{
+    width: 100px;
+    height: 100px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    transform: rotate(-15deg);
+}
+.white-wrapper{
+    width: 80%;
+    height: 80%;
+
+    background-position: initial;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.block-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+.booth-container{
+    display: flex;
+}
+.normal-1-5-container{
+    display: flex;
+}
+.pink{
+    position: absolute;
+    top: 40%;
+    left: 10%;
+}

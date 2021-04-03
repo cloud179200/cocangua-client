@@ -37,7 +37,7 @@ const Forgot = (props) => {
       setLoading(true);
       const data = JSON.stringify({ username: username });
       axios
-        .post("/api/resetPasswordRequest", data)
+        .post("/resetPasswordRequest", data)
         .then((res) => {
           const { status, message } = res.data;
           setLoading(false);
@@ -81,7 +81,7 @@ const Forgot = (props) => {
         key: code,
       });
       axios
-        .post("/api/resetPasswordConfirm", data)
+        .post("/resetPasswordConfirm", data)
         .then((res) => {
           setLoading(false);
           const { status, message } = res.data;
@@ -97,6 +97,14 @@ const Forgot = (props) => {
         });
     }
   };
+
+  useState(() => {
+    
+    return () => {
+      setLoading(null);
+      setState(null);
+    };
+  }, []);
   return (
     <motion.div
       className="container"
@@ -117,7 +125,9 @@ const Forgot = (props) => {
               className="back-main-switch"
               onClick={() => {
                 sound && playBtnClickAudio();
-                state.onFormGetCode ? history.push("/auth"): setState({...state, onFormGetCode: !state.onFormGetCode});
+                state.onFormGetCode
+                  ? history.push("/auth")
+                  : setState({ ...state, onFormGetCode: !state.onFormGetCode });
               }}
             >
               X

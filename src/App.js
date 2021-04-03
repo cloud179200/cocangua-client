@@ -6,9 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import introAudio from "./shared/media/audio/intro.mp3";
 import Main from "./components/Main/Main";
 import { useEffect, useState } from "react";
-import { addNotificationMessage, loadUser, removeUser } from "./actions";
+import { loadUser, removeUser } from "./actions";
 import NotificationMessage from "./shared/notificationMessenger/NotificationMessenger";
 import PageLoading from "./components/shared/PageLoading";
+import Board from "./components/Game/Board";
 // import {io} from "socket.io-client";
 const App = () => {
   const { music } = useSelector((state) => state.audioControl);
@@ -41,7 +42,7 @@ const App = () => {
       } else {
         dispatch(removeUser());
       }
-    }, 3000);
+    }, 5000);
 
     return () => {
       clearTimeout(timeLoadingPage);
@@ -50,6 +51,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
+      {/* <Board/> */}
       {pageLoading ? (
         <PageLoading />
       ) : (

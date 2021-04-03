@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
@@ -9,7 +9,6 @@ import Loading from "../shared/Loading";
 
 const Signin = (props) => {
   const [loading, setLoading] = useState(false);
-
   const [state, setState] = useState({
     username: "",
     password: "",
@@ -40,7 +39,7 @@ const Signin = (props) => {
     else {
       setLoading(true);
       axios
-        .post("/api/signin", data)
+        .post("/signin", data)
         .then((res) => {
           const { token, status, message } = res.data;
           if (token) {
@@ -60,6 +59,12 @@ const Signin = (props) => {
     }
   };
 
+  useEffect(() => {
+    return () => {
+      setLoading(false);
+      setState(null);
+    };
+  }, []);
   return (
     <motion.div
       className="container"

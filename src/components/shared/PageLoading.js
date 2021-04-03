@@ -14,11 +14,11 @@ const PageLoading = () => {
       <div className="page-loading-title">Seahorse WebGame</div>
       <div className="page-loading-waifu"></div>
       <div className="tips-and-loading-content-container">
-        <div className="tips">PRO Tip: Incense for ancestors to get more luck</div>
+        <div className="tips">Protips</div>
         <div className="loading-content">
           Loading&nbsp;<div>.</div>&nbsp;
+          <div>.</div>&nbsp;
           <div>.</div>
-          &nbsp;<div>.</div>
         </div>
       </div>
       <div

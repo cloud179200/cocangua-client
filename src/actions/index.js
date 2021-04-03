@@ -31,7 +31,7 @@ export const updateUser = (dataToUpdate) => {
         avatar: avatar
       });
       axios
-        .post("/api/updateuser", data)
+        .post("/updateuser", data)
         .then((res) => {
           const { status, message } = res.data;
           if (status === "success") {
@@ -57,7 +57,7 @@ export const updateUserPassword = (dataToUpdate) => {
         new: newPassword,
       });
       axios
-        .post("/api/updatepassword", data)
+        .post("/updatepassword", data)
         .then((res) => {
           const { status, message } = res.data;
           console.log(res.data);
@@ -78,7 +78,7 @@ export const loadUser = () => {
         token: token,
       });
       axios
-        .post("api/getInfo", data)
+        .post("/getInfo", data)
         .then((res) => {
           const { status, message } = res.data;
           if (status !== "error") {
