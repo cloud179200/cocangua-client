@@ -10,7 +10,11 @@ import avatar4 from "../../shared/media/image/ingame_Img_user_04.png";
 import avatar5 from "../../shared/media/image/ingame_Img_user_05.png";
 import avatar6 from "../../shared/media/image/ingame_Img_user_06.png";
 import Loading from "../shared/Loading";
-import { addNotificationMessage, updateUser, updateUserPassword } from "../../actions";
+import {
+  addNotificationMessage,
+  updateUser,
+  updateUserPassword,
+} from "../../actions";
 import { Modal } from "semantic-ui-react";
 const openInNewTab = (url) => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
@@ -194,12 +198,15 @@ const Rooms = () => {
                     <input
                       className="input-modal"
                       type="email"
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        let value = e.target.value.replace(" ", "");
+                        const re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
+                        value = value.replace(re, "");
                         setCurrentDataUser({
                           ...currentDataUser,
-                          email: e.target.value,
-                        })
-                      }
+                          email: value,
+                        });
+                      }}
                       value={currentDataUser.email}
                     />
                   </div>

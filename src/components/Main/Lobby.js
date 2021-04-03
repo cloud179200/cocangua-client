@@ -256,12 +256,15 @@ const Lobby = () => {
                     <input
                       className="input-modal"
                       type="email"
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        let value = e.target.value.replace(" ", "");
+                        const re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
+                        value = value.replace(re, "");
                         setCurrentDataUser({
                           ...currentDataUser,
-                          email: e.target.value,
-                        })
-                      }
+                          email: value,
+                        });
+                      }}
                       value={currentDataUser.email}
                     />
                   </div>
@@ -341,7 +344,8 @@ const Lobby = () => {
                   currentDataUser.avatar === 2 ? "5px solid #f7ae39" : "none",
               }}
               onClick={() => {
-                setAvatar(2)}}
+                setAvatar(2);
+              }}
             ></div>
             <div
               style={{

@@ -20,11 +20,12 @@ const Signup = (props) => {
   const { sound, btnClickAudio } = audioControl;
   const [playBtnClickAudio] = useSound(btnClickAudio);
   const history = useHistory();
-
   const dispatch = useDispatch();
-
   const handleInputChange = (e) => {
-    setState({ ...state, [e.target.name]: e.target.value });
+    let value = e.target.value.replace(" ", "");
+    const re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
+    value = value.replace(re, "");
+    setState({ ...state, [e.target.name]: value });
   };
   const handleSignUpFormSubmit = (e) => {
     e.preventDefault();
