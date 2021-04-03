@@ -5,7 +5,7 @@ import { removeNotificationMessage } from "../../actions";
 import { motion } from "framer-motion";
 const NotificationMessage = (props) => {
   const { idMessage, content, error } = props;
-  const [notificationContent, setNotificationContent] = useState(content);
+  const notificationContent = useState(content)[0];
   const dispatch = useDispatch();
 
   useEffect(() => {

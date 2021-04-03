@@ -7,9 +7,7 @@ import { addNotificationMessage } from "../../actions";
 
 const Main = () => {
   const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
   if (!user) {
-    dispatch(addNotificationMessage("Signout success!", false));
     return <Redirect to="/auth/signin" />;
   }
   return (

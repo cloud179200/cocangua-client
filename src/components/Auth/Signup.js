@@ -36,9 +36,7 @@ const Signup = (props) => {
     const emailVerify = email.trim();
     const validEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
       emailVerify
-    )
-      ? true
-      : false;
+    );
     if (!username || !password || !email || !confirmPassword) {
       dispatch(addNotificationMessage("Please fill info!", true));
     } else if (usernameVerify.length < 8 || passwordVerify.length < 8)

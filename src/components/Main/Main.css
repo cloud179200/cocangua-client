@@ -379,11 +379,11 @@
 .modal {
   background-color: rgba(255, 255, 255, 0.65) !important;
   border: 5px solid #e064c8 !important;
-  width: 600px !important;
-  height: 550px !important;
+  width: 720px !important;
+  height: 660px !important;
   display: flex;
   font-family: "Sensei";
-  padding: 5%;
+  padding: 3%;
   display: flex;
   flex-direction: column;
 }
@@ -395,9 +395,7 @@
   font-size: 48px;
   border-bottom: 3px solid #f480dd;
   text-align: center;
-  margin-right: 20px;
-  margin-left: 20px;
-  height: 20%;
+  height: 15%;
 }
 .modal-body {
   display: flex;
@@ -416,7 +414,8 @@
   cursor: pointer;
 }
 .modal-avatar-and-info div:first-child {
-  width: 60%;
+  width: 75%;
+  height: 100%;
   background-image: url("../../shared/media/image/background_sqare.png");
   background-position: center;
   background-repeat: no-repeat;
@@ -492,13 +491,13 @@
 .modal-foot button:hover {
   color: white;
 }
-.avatar-container{
+.avatar-container {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   padding-top: 10px;
 }
-.avatar-container div{
+.avatar-container div {
   background-color: #ffd185;
   background-position: center;
   background-repeat: no-repeat;
@@ -506,4 +505,13 @@
   width: 130px;
   height: 130px;
   border-radius: 15px;
+  transition: 0.2s;
+  margin-bottom: 20px;
+}
+.input-modal{
+  width: 55%;
+  outline: none;
+  background: none;
+  border: none;
+  font-family: 'Sensei';
 }

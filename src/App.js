@@ -8,7 +8,7 @@ import Main from "./components/Main/Main";
 import { useEffect } from "react";
 import { addNotificationMessage, loadUser, removeUser } from "./actions";
 import NotificationMessage from "./shared/notificationMessenger/NotificationMessenger";
-import {io} from "socket.io-client";
+// import {io} from "socket.io-client";
 const App = () => {
   const { music } = useSelector((state) => state.audioControl);
   const { messages } = useSelector((state) => state.notificationMessage);
@@ -32,7 +32,6 @@ const App = () => {
     if (token) {
       !user && dispatch(loadUser());
       if (user) {
-        dispatch(addNotificationMessage("Signin success", false));
         return <Redirect to="/lobby" />;
       }
     } else {

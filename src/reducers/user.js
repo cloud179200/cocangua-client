@@ -6,7 +6,7 @@ const userReducer = (state = null, action) => {
       localStorage.removeItem("token_seahorsechessapp");
       return null;
     default:
-      return state === null ? null : {...state};
+      return state === null ? null : { ...state };
   }
 };
 
