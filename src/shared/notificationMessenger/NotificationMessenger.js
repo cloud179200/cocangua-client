@@ -16,7 +16,7 @@ const NotificationMessage = (props) => {
   }, []);
   return (
     <motion.div
-      initial={{ x: 200, scale: 0 }}
+      initial={{ x: -200, scale: 0 }}
       animate={{ x: 0, scale: 1 }}
       transition={{
         type: "spring",
