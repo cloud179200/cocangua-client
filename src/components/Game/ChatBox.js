@@ -6,7 +6,6 @@ import avatar4 from "../../shared/media/image/ingame_Img_user_04.png";
 import avatar5 from "../../shared/media/image/ingame_Img_user_05.png";
 import avatar6 from "../../shared/media/image/ingame_Img_user_06.png";
 import { useSelector } from "react-redux";
-import { socket } from "../../shared/socket/socket";
 
 const ChatBox = (props) => {
   const { onClick } = props;
@@ -46,13 +45,7 @@ const ChatBox = (props) => {
   };
 
   useEffect(() => {
-    socket &&
-      socket.on("new-message", (res) => {
-        console.log(res);
-        //todo: get message from socket
-        setMessages([...messages, {username: "vietanh2000", content: "Hello"}])
-        // if(res.)
-      });
+    setMessages([{username:"vietanh20000", content: "Hello"}])
     return () => {};
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [room]);

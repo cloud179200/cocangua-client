@@ -10,14 +10,13 @@ import { loadUser, removeUser } from "./actions";
 import NotificationMessage from "./shared/notificationMessenger/NotificationMessenger";
 import PageLoading from "./components/shared/PageLoading";
 import Board from "./components/Game/Board";
-import { disconnectSocket, socket} from "./shared/socket/socket";
+import { disconnectSocket, initiateSocket } from "./shared/socket/socket";
 const App = () => {
   const { music } = useSelector((state) => state.audioControl);
   const { messages } = useSelector((state) => state.notificationMessage);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [pageLoading, setPageLoading] = useState(true);
-  const ioClient = socket;
   const messagesRender = [...messages].map((message) => (
     <NotificationMessage
       key={message.id}
@@ -34,18 +33,19 @@ const App = () => {
       if (token) {
         !user && dispatch(loadUser());
         if (user) {
+          initiateSocket();
           return <Redirect to="/lobby" />;
         }
       } else {
         dispatch(removeUser());
       }
-    }, 1000);
-
+    }, 5000);
     return () => {
-      disconnectSocket();
+      !localStorage.getItem("token_seahorsechessapp") && disconnectSocket();
       clearTimeout(timeLoadingPage);
     };
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <BrowserRouter>

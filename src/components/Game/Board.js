@@ -13,29 +13,333 @@ import avatar3 from "../../shared/media/image/ingame_Img_user_03.png";
 import avatar4 from "../../shared/media/image/ingame_Img_user_04.png";
 import avatar5 from "../../shared/media/image/ingame_Img_user_05.png";
 import avatar6 from "../../shared/media/image/ingame_Img_user_06.png";
-import diceRolling from "../../shared/media/image/dicerolling.gif";
 import ChatBox from "./ChatBox";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 import BoardSetting from "./BoardSetting";
-import { Redirect } from "react-router";
-import { removeRoom } from "../../actions";
+import { useHistory } from "react-router";
 
 const Board = () => {
   const audioControl = useSelector((state) => state.audioControl);
   const places = useSelector((state) => state.placesHorse);
   const room = useSelector((state) => state.room);
   const user = useSelector((state) => state.user);
-
+  const history = useHistory();
   const dispatch = useDispatch();
   const { sound, btnClickAudio } = audioControl;
   const [playBtnClickAudio] = useSound(btnClickAudio);
   const [dice, setDice] = useState({
-    dice_1: Math.floor(Math.random() * 6) + 1,
-    dice_2: Math.floor(Math.random() * 6) + 1,
+    dice_1: 0,
+    dice_2: 0,
   });
-  const [rolling, setRolling] = useState(false);
-  const [chatBox, setChatBox] = useState(false);
+  const [control, setControl] = useState({
+    currentPlace: null,
+    rolling: false,
+    chatBox: false,
+  });
+
+  //!board control
+  const result = {
+    red: {
+      owner: "username",
+      stable: 2,
+    },
+    blue: {
+      owner: "username",
+      stable: 2,
+    },
+    green: {
+      owner: "username",
+      stable: 2,
+    },
+    yellow: {
+      owner: "username",
+      stable: 2,
+    },
+    addressOrder: [
+      {
+        order: "pink-1",
+        next: "pink-2",
+        currentHave: null,
+      },
+      {
+        order: "pink-2",
+        next: "pink-3",
+        currentHave: null,
+      },
+      {
+        order: "pink-3",
+        next: "pink-4",
+        currentHave: null,
+      },
+      {
+        order: "pink-4",
+        next: "pink-5",
+        currentHave: null,
+      },
+      {
+        order: "pink-5",
+        next: "pink-6",
+        currentHave: null,
+      },
+      {
+        order: "pink-6",
+        next: "pink-7",
+        currentHave: null,
+      },
+      {
+        order: "pink-7",
+        next: "pink-8",
+        currentHave: null,
+      },
+      {
+        order: "pink-8",
+        next: "pink-9",
+        currentHave: null,
+      },
+      {
+        order: "pink-10",
+        next: "pink-11",
+        currentHave: null,
+      },
+      {
+        order: "pink-11",
+        next: "pink-12",
+        currentHave: null,
+      },
+      {
+        order: "pink-12",
+        next: "pink-13",
+        currentHave: null,
+      },
+      {
+        order: "pink-13",
+        next: "pink-14",
+        currentHave: null,
+      },
+      {
+        order: "pink-14",
+        next: "pink-15",
+        currentHave: null,
+      },
+      {
+        order: "pink-9",
+        next: "green-10",
+        currentHave: null,
+      },
+      {
+        order: "green-1",
+        next: "green-2",
+        currentHave: null,
+      },
+      {
+        order: "green-2",
+        next: "green-3",
+        currentHave: null,
+      },
+      {
+        order: "green-3",
+        next: "green-4",
+        currentHave: null,
+      },
+      {
+        order: "green-4",
+        next: "green-5",
+        currentHave: null,
+      },
+      {
+        order: "green-5",
+        next: "green-6",
+        currentHave: null,
+      },
+      {
+        order: "green-6",
+        next: "green-7",
+        currentHave: null,
+      },
+      {
+        order: "green-7",
+        next: "green-8",
+        currentHave: null,
+      },
+      {
+        order: "green-8",
+        next: "green-9",
+        currentHave: null,
+      },
+      {
+        order: "green-10",
+        next: "green-11",
+        currentHave: null,
+      },
+      {
+        order: "green-11",
+        next: "green-12",
+        currentHave: null,
+      },
+      {
+        order: "green-12",
+        next: "green-13",
+        currentHave: null,
+      },
+      {
+        order: "green-13",
+        next: "green-14",
+        currentHave: null,
+      },
+      {
+        order: "green-14",
+        next: "green-15",
+        currentHave: null,
+      },
+      {
+        order: "green-9",
+        next: "yellow-10",
+        currentHave: null,
+      },
+      {
+        order: "yellow-1",
+        next: "yellow-2",
+        currentHave: null,
+      },
+      {
+        order: "yellow-2",
+        next: "yellow-3",
+        currentHave: null,
+      },
+      {
+        order: "yellow-3",
+        next: "yellow-4",
+        currentHave: null,
+      },
+      {
+        order: "yellow-4",
+        next: "yellow-5",
+        currentHave: null,
+      },
+      {
+        order: "yellow-5",
+        next: "yellow-6",
+        currentHave: null,
+      },
+      {
+        order: "yellow-6",
+        next: "yellow-7",
+        currentHave: null,
+      },
+      {
+        order: "yellow-7",
+        next: "yellow-8",
+        currentHave: null,
+      },
+      {
+        order: "yellow-8",
+        next: "yellow-9",
+        currentHave: null,
+      },
+      {
+        order: "yellow-10",
+        next: "yellow-11",
+        currentHave: null,
+      },
+      {
+        order: "yellow-11",
+        next: "yellow-12",
+        currentHave: null,
+      },
+      {
+        order: "yellow-12",
+        next: "yellow-13",
+        currentHave: null,
+      },
+      {
+        order: "yellow-13",
+        next: "yellow-14",
+        currentHave: null,
+      },
+      {
+        order: "yellow-14",
+        next: "yellow-15",
+        currentHave: null,
+      },
+      {
+        order: "yellow-9",
+        next: "blue-10",
+        currentHave: null,
+      },
+      {
+        order: "blue-1",
+        next: "blue-2",
+        currentHave: null,
+      },
+      {
+        order: "blue-2",
+        next: "blue-3",
+        currentHave: null,
+      },
+      {
+        order: "blue-3",
+        next: "blue-4",
+        currentHave: null,
+      },
+      {
+        order: "blue-4",
+        next: "blue-5",
+        currentHave: null,
+      },
+      {
+        order: "blue-5",
+        next: "blue-6",
+        currentHave: null,
+      },
+      {
+        order: "blue-6",
+        next: "blue-7",
+        currentHave: null,
+      },
+      {
+        order: "blue-7",
+        next: "blue-8",
+        currentHave: null,
+      },
+      {
+        order: "blue-8",
+        next: "blue-9",
+        currentHave: null,
+      },
+      {
+        order: "blue-10",
+        next: "blue-11",
+        currentHave: null,
+      },
+      {
+        order: "blue-11",
+        next: "blue-12",
+        currentHave: null,
+      },
+      {
+        order: "blue-12",
+        next: "blue-13",
+        currentHave: null,
+      },
+      {
+        order: "blue-13",
+        next: "blue-14",
+        currentHave: null,
+      },
+      {
+        order: "blue-14",
+        next: "blue-15",
+        currentHave: null,
+      },
+      {
+        order: "blue-9",
+        next: "pink-10",
+        currentHave: null,
+      },
+    ],
+  };
+  // console.log(result);
   const getDicePic = (number) => {
     // eslint-disable-next-line default-case
     switch (number) {
@@ -54,18 +358,18 @@ const Board = () => {
     }
   };
   const handleRollClick = () => {
-    setRolling(true);
+    setControl({ ...control, rolling: !control.rolling });
     const rollingTimer = setTimeout(() => {
       const dice_1 = Math.floor(Math.random() * 6) + 1;
       const dice_2 = Math.floor(Math.random() * 6) + 1;
-
       setDice({
         dice_1: dice_1,
         dice_2: dice_2,
       });
-      setRolling(false);
+
+      setControl({ ...control, rolling: !control.rolling });
       clearTimeout(rollingTimer);
-    }, 2000);
+    }, 1000);
   };
   const getAvatarPic = (avatarData) => {
     switch (avatarData) {
@@ -86,79 +390,66 @@ const Board = () => {
     }
   };
 
-  const MovingHorse = (MovePlace) => {
-    if (places) {
-      let x = 1;
-      MovePlace.forEach((pl) => {
-        const { bottom, right, width, height } = places[pl];
-        const horsemove = setTimeout(() => {
-          setCurrentPlace({ bottom, right, width, height });
-          clearTimeout(horsemove);
-        }, x * 100);
-        x += 1;
-      });
+  //horseMoving
+  const MovingHorse = (MoveStep, currentOrder) => {
+    if (places && MoveStep > 0) {
+      if (Object.keys(places).length === 56) {
+        let addressData = result.addressOrder.filter(
+          (address) => address.order === currentOrder
+        );
+        const chessColor = addressData[0].currentHave;
+        let next = addressData[0].next;
+        let currentPlaceData = {
+          order: currentOrder,
+          next,
+          rect: Object.entries(places).filter(
+            ([key, value]) => key === currentOrder
+          )[0][1],
+        };
+        for (let i = 1; i < MoveStep + 2; i++) {
+          let { bottom, right } = currentPlaceData.rect;
+          console.log(currentPlaceData.rect);
+          const timerHorseMove = setTimeout(() => {
+            setControl({ ...control, currentPlace: { bottom, right } });
+          }, i * 500);
+          addressData = result.addressOrder.filter(
+            // eslint-disable-next-line no-loop-func
+            (address) => address.order === next
+          );
+          next = addressData[0].next;
+          currentPlaceData = {
+            order: addressData[0].order,
+            next,
+            rect: Object.entries(places).filter(
+              // eslint-disable-next-line no-loop-func
+              ([key, value]) => key === addressData[0].order
+            )[0][1],
+          };
+        }
+      }
     }
   };
-  const [currentPlace, setCurrentPlace] = useState(null);
+  // const MoveNumber = dice.dice_1 + dice.dice_2;
+  //   MovingHorse(MoveNumber, "pink-1");
   useEffect(() => {
+    console.log(user);
+    console.log(room);
     if (!user) {
-      return <Redirect to="/auth/signin" />;
+      history.push("/auth/signin");
     }
     if (!room) {
-      return <Redirect to="/lobby/join" />;
+      history.push("/lobby/join");
     }
-  }, []);
-  useEffect(() => {
-    MovingHorse([
-      "pink-1",
-      "pink-2",
-      "pink-3",
-      "pink-4",
-      "pink-5",
-      "pink-6",
-      "pink-7",
-      "pink-8",
-      "pink-9",
-      "green-10",
-      "green-1",
-      "green-2",
-      "green-3",
-      "green-4",
-      "green-5",
-      "green-6",
-      "green-7",
-      "green-8",
-      "green-9",
-      "yellow-10",
-      "yellow-1",
-      "yellow-2",
-      "yellow-3",
-      "yellow-4",
-      "yellow-5",
-      "yellow-6",
-      "yellow-7",
-      "yellow-8",
-      "yellow-9",
-      "blue-10",
-      "blue-1",
-      "blue-2",
-      "blue-3",
-      "blue-4",
-      "blue-5",
-      "blue-6",
-      "blue-7",
-      "blue-8",
-      "blue-9",
-    ]);
-  }, [places]);
+  }, [room, places, dice]);
+
   return (
     <>
-      {currentPlace && (
+      {control.currentPlace && (
         <div
           className="horse"
           style={{
-            top: `${currentPlace.bottom - 95}px`,
-            left: `${currentPlace.right - 80}px`,
+            top: `${control.currentPlace.bottom - 95}px`,
+            left: `${control.right - 80}px`,
           }}
         ></div>
       )}
@@ -433,7 +724,7 @@ const Board = () => {
             </div>
           </div>
         </div>
-        {rolling ? (
+        {control.rolling ? (
           <div className="dice-rolling"></div>
         ) : (
           <>
@@ -449,59 +740,76 @@ const Board = () => {
         )}
 
         <div className="roll-btn" onClick={handleRollClick}></div>
-        <div className="user user-1">
-          <div
-            className="board-avatar"
-            style={{ backgroundImage: `url(${getAvatarPic(1)})` }}
-          ></div>
-          <div className="username-and-win">
-            <div></div>
-            <div></div>
+        {room && room.user1 && (
+          <div className="user user-1">
+            <div
+              className="board-avatar"
+              style={{
+                backgroundImage: `url(${getAvatarPic(room.user1.avatar)})`,
+              }}
+            ></div>
+            <div className="username-and-win">
+              <div>{room.user1.username}</div>
+              <div>{room.user1.username}</div>
+            </div>
           </div>
-        </div>
-        <div className="user user-2">
-          <div
-            className="board-avatar"
-            style={{ backgroundImage: `url(${getAvatarPic(1)})` }}
-          ></div>
-          <div className="username-and-win">
-            <div></div>
-            <div></div>
+        )}
+        {room && room.user2 && (
+          <div className="user user-2">
+            <div
+              className="board-avatar"
+              style={{
+                backgroundImage: `url(${getAvatarPic(room.user2.avatar)})`,
+              }}
+            ></div>
+            <div className="username-and-win">
+              <div>{room.user2.username}</div>
+              <div>{room.user2.username}</div>
+            </div>
           </div>
-        </div>
-        <div className="user user-3">
-          <div
-            className="board-avatar"
-            style={{ backgroundImage: `url(${getAvatarPic(1)})` }}
-          ></div>
-          <div className="username-and-win">
-            <div>username</div>
-            <div>Win</div>
+        )}
+        {room && room.user3 && (
+          <div className="user user-3">
+            <div
+              className="board-avatar"
+              style={{
+                backgroundImage: `url(${getAvatarPic(room.user3.avatar)})`,
+              }}
+            ></div>
+            <div className="username-and-win">
+              <div>{room.user3.username}</div>
+              <div>{room.user3.username}</div>
+            </div>
           </div>
-        </div>
-        <div className="user user-4">
-          <div
-            className="board-avatar"
-            style={{ backgroundImage: `url(${getAvatarPic(1)})` }}
-          ></div>
-          <div className="username-and-win">
-            <div></div>
-            <div></div>
+        )}
+        {room && room.user0 && (
+          <div className="user user-4">
+            <div
+              className="board-avatar"
+              style={{
+                backgroundImage: `url(${getAvatarPic(room.user0.avatar)})`,
+              }}
+            ></div>
+            <div className="username-and-win">
+              <div>{room.user0.username}</div>
+              <div>{room.user0.id}</div>
+            </div>
           </div>
-        </div>
-        {chatBox ? (
+        )}
+        {control.chatBox ? (
           <ChatBox
             chatBoxId="hehe"
-            owner={null}
             onClick={() => {
               sound && playBtnClickAudio();
-              setChatBox(!chatBox);
+              setControl({ ...control, chatBox: !control.chatBox });
             }}
           />
         ) : (
           <div
             className="board-control-btn-wrapper board-chat-box"
-            onClick={() => setChatBox(!chatBox)}
+            onClick={() =>
+              setControl({ ...control, chatBox: !control.chatBox })
+            }
           >
             <div className="board-chat-box-in"></div>
           </div>
