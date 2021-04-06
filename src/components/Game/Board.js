@@ -94,7 +94,7 @@ const Board = () => {
         const horsemove = setTimeout(() => {
           setCurrentPlace({ bottom, right, width, height });
           clearTimeout(horsemove);
-        }, x * 500);
+        }, x * 100);
         x += 1;
       });
     }
@@ -129,6 +129,26 @@ const Board = () => {
       "green-7",
       "green-8",
       "green-9",
+      "yellow-10",
+      "yellow-1",
+      "yellow-2",
+      "yellow-3",
+      "yellow-4",
+      "yellow-5",
+      "yellow-6",
+      "yellow-7",
+      "yellow-8",
+      "yellow-9",
+      "blue-10",
+      "blue-1",
+      "blue-2",
+      "blue-3",
+      "blue-4",
+      "blue-5",
+      "blue-6",
+      "blue-7",
+      "blue-8",
+      "blue-9",
     ]);
   }, [places]);
   return (
@@ -137,7 +157,7 @@ const Board = () => {
         <div
           className="horse"
           style={{
-            top: `${currentPlace.bottom - 80}px`,
+            top: `${currentPlace.bottom - 95}px`,
             left: `${currentPlace.right - 80}px`,
           }}
         ></div>

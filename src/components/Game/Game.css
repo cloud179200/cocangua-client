@@ -10,11 +10,12 @@
   align-items: center;
 }
 .board {
-  width: 1000px;
-  height: 880px;
+  width: 960px;
+  height: 960px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  transform: matrix(0.49,-0.49,0.49,0.49,0,0);
 }
 .square {
   width: 80px;
@@ -26,7 +27,7 @@
 
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 .white-wrapper {
   width: 80%;
@@ -37,37 +38,45 @@
   background-size: contain;
 }
 .block-container {
-  width: 500px;
-  height: 500px;
+  width: 480px;
+  height: 560px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: flex-end;
 }
 .booth-container {
   display: flex;
   width: 100%;
-  justify-content: space-around;
+  justify-content: flex-end;
   padding-right: 80px;
-  padding-bottom: 40px;
 }
 .normal-1-5-container {
   width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
   padding-right: 80px;
+  padding-top: 80px;
 }
-.normal-6-9-container{
+.normal-6-9-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding-right: 80px;
+  padding-bottom: 40px;
 }
 .pink {
   transform: rotate(90deg);
 }
-
+.pink .normal-1-5-container{
+  padding-top: 40px;
+}
+.yellow .normal-1-5-container{
+  padding-top: 40px;
+}
 .blue {
   transform: rotate(180deg);
 }
-
 .yellow {
   transform: rotate(-90deg);
 }
@@ -109,7 +118,7 @@
   background-repeat: no-repeat;
   transition: 0.2s;
 }
-.dice-rolling{
+.dice-rolling {
   position: absolute;
   right: calc(2% + 160px);
   bottom: 2%;
@@ -134,24 +143,24 @@
   align-items: center;
 }
 .user-1 {
-  top: 2%;
-  right: 50%;
-  background-image: url("../../shared/media/image/pink.png");
+  top: 5%;
+  right: 40%;
+  background-image: url("../../shared/media/image/blue.png");
 }
 .user-2 {
-  right: 2%;
-  top: 30%;
+  right: 5%;
+  top: 50%;
   background-image: url("../../shared/media/image/yellow.png");
 }
 .user-3 {
-  bottom: 2%;
-  right: 30%;
+  bottom: 5%;
+  left: 20%;
   background-image: url("../../shared/media/image/green.png");
 }
 .user-4 {
-  left: 2%;
-  bottom: 40%;
-  background-image: url("../../shared/media/image/blue.png");
+  left: 10%;
+  top: 30%;
+  background-image: url("../../shared/media/image/pink.png");
 }
 .board-avatar {
   background-position: center;

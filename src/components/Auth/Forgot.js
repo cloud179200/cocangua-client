@@ -88,6 +88,7 @@ const Forgot = (props) => {
           const { status, message } = res.data;
           if (status === "success") {
             dispatch(addNotificationMessage(message, false));
+            setState({...state, onFormGetCode: false})
             history.push("/auth/signin");
           }
           status === "error" && dispatch(addNotificationMessage(message, true));
