@@ -1,46 +1,450 @@
-.game{
-    width: 100%;
-    height: 100vh;
-    background-image: url("../../shared/media/image/background_pageloading.png");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.board-wrapper {
+  background-image: url("../../shared/media/image/background_pageloading.png");
+  width: 100%;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.square{
-    width: 100px;
-    height: 100px;
+.board {
+  width: 1000px;
+  height: 880px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.square {
+  width: 80px;
+  height: 80px;
 
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    transform: rotate(-15deg);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
-.white-wrapper{
-    width: 80%;
-    height: 80%;
+.white-wrapper {
+  width: 80%;
+  height: 80%;
 
-    background-position: initial;
-    background-repeat: no-repeat;
-    background-size: contain;
+  background-position: initial;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
-.block-container{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-end;
+.block-container {
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
 }
-.booth-container{
-    display: flex;
+.booth-container {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  padding-right: 80px;
+  padding-bottom: 40px;
 }
-.normal-1-5-container{
-    display: flex;
+.normal-1-5-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding-right: 80px;
 }
-.pink{
-    position: absolute;
-    top: 40%;
-    left: 10%;
+.normal-6-9-container{
+  padding-right: 80px;
+}
+.pink {
+  transform: rotate(90deg);
+}
+
+.blue {
+  transform: rotate(180deg);
+}
+
+.yellow {
+  transform: rotate(-90deg);
+}
+
+.roll-btn {
+  position: absolute;
+  bottom: 2%;
+  right: 2%;
+
+  width: 200px;
+  height: 200px;
+
+  background-image: url("../../shared/media/image/button_roll.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+.dice-1 {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  bottom: 2%;
+  right: calc(2% + 260px);
+
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: 0.2s;
+}
+.dice-2 {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  bottom: 2%;
+  right: calc(2% + 340px);
+
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  transition: 0.2s;
+}
+.dice-rolling{
+  position: absolute;
+  right: calc(2% + 160px);
+  bottom: 2%;
+  background-image: url("../../shared/media/image/dicerolling.gif");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 300px;
+  height: 160px;
+  transition: 0.2s;
+}
+.user {
+  position: absolute;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 190px;
+  height: 52px;
+  z-index: 2;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.user-1 {
+  top: 2%;
+  right: 50%;
+  background-image: url("../../shared/media/image/pink.png");
+}
+.user-2 {
+  right: 2%;
+  top: 30%;
+  background-image: url("../../shared/media/image/yellow.png");
+}
+.user-3 {
+  bottom: 2%;
+  right: 30%;
+  background-image: url("../../shared/media/image/green.png");
+}
+.user-4 {
+  left: 2%;
+  bottom: 40%;
+  background-image: url("../../shared/media/image/blue.png");
+}
+.board-avatar {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 36px;
+  width: 36px;
+  border-radius: 100%;
+  background-color: #ffd185;
+  border: 1px solid black;
+  margin-left: 8px;
+}
+.username-and-win {
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+
+  font-size: 16px;
+  font-family: "Sensei";
+
+  padding-left: 10px;
+  padding-bottom: 5px;
+}
+.username-and-win div {
+  width: 85%;
+}
+.username-and-win div:first-child {
+  border-bottom: 2px solid #7e55f3;
+}
+.board-control-btn-wrapper {
+  width: 80px;
+  height: 80px;
+
+  position: absolute;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-image: url("../../shared/media/image/background_setting.png");
+}
+.board-chat-box {
+  bottom: 2%;
+  left: 2%;
+  z-index: 3;
+}
+
+.board-chat-box-in {
+  width: 60%;
+  height: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url("../../shared/media/image/chat.png");
+}
+.board-setting-container {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+
+  width: 80px;
+  height: 80px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.board-setting {
+  width: 60%;
+  height: 60%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.board-menu-setting-container {
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.board-menu-setting {
+  position: relative;
+  background-color: #d188a6;
+  border: 1px solid #5a6978;
+  width: 0%;
+  height: 0%;
+  border-radius: 15px;
+  right: 3%;
+  top: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s;
+  opacity: 0;
+}
+.board-menu-setting-item-btn {
+  z-index: 99;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50%;
+  width: 35%;
+  height: 80%;
+  font-family: "Sensei";
+  font-size: 24px;
+  border-radius: 15px;
+  margin: 0 10px;
+  outline: none;
+  border: none;
+  background-color: #f6d2e1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+}
+.board-menu-setting::before {
+  content: "";
+  background-color: #d188a6;
+  width: 30px;
+  height: 30px;
+  border-bottom: 1px solid #5a6978;
+  border-left: 1px solid #5a6978;
+  position: absolute;
+  transition: 0.5s;
+  left: -15px;
+  top: 12%;
+  display: none;
+  transform: rotate(45deg);
+}
+.board-setting:hover > .board-menu-setting {
+  width: 450%;
+  height: 300%;
+
+  right: -150%;
+  opacity: 1;
+}
+.board-setting:hover > .board-menu-setting::before {
+  width: 30px;
+  height: 30px;
+  display: block;
+}
+.off {
+  width: 100%;
+  height: 5%;
+  transform: rotate(35deg);
+  background-color: black;
+}
+
+.chat-box {
+  position: absolute;
+  bottom: 2%;
+  left: 2%;
+  width: 40%;
+  height: 45%;
+
+  display: flex;
+  flex-direction: column;
+
+  font-family: "Sensei";
+  font-size: 20px;
+  background-color: rgba(82, 82, 82, 0.55);
+  border: 2px solid #8492a6;
+  border-radius: 5px;
+
+  color: white;
+  z-index: 3;
+}
+.chat-box-head {
+  width: 100%;
+  height: 10%;
+  background-color: rgba(105, 105, 105, 0.75);
+  border: 1px solid #ffffff;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  border-radius: 5px;
+}
+.chat-box-head div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.chat-box-id {
+  flex-grow: 1;
+}
+.chat-box-close {
+  width: 65px;
+  height: 100%;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #f77275;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.chat-box-body {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  overflow-y: scroll;
+}
+.chat-box-body::-webkit-scrollbar {
+  display: none;
+}
+.message-mine {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 1%;
+}
+.message-mine .content {
+  max-width: 80%;
+  padding: 5px;
+  word-break: break-all;
+  background-color: rgba(107, 107, 107, 0.5);
+  border: 2px solid #b97fb4;
+  border-radius: 15px;
+}
+.message-other {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 1%;
+}
+.message-other .avatar {
+  width: 50px;
+  height: 50px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 100%;
+  border: 1px solid black;
+  margin-right: 5px;
+}
+.message-other .content {
+  max-width: 80%;
+  padding: 5px;
+  word-break: break-all;
+  background-color: rgba(107, 107, 107, 0.5);
+  border: 2px solid #b97fb4;
+  border-radius: 15px;
+}
+.chat-box-foot {
+  width: 100%;
+  height: 15%;
+  padding: 1%;
+  border-top: 2px solid #b97fb4;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.chat-box-foot input {
+  flex-grow: 1;
+  outline: none;
+  background: none;
+  border: none;
+  font-family: "Sensei";
+  background-color: rgba(107, 107, 107, 0.5);
+  border: 2px solid #b97fb4;
+  border-radius: 5px;
+  color: white;
+}
+.chat-box-foot button {
+  width: 50px;
+  height: 36px;
+  background: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  outline: none;
+  border: none;
+  margin-left: 20px;
+  background-image: url("../../shared/media/image/button_send.png");
+}
+
+.horse {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-image: url("../../shared/media/image/horseyelllow_1.png");
+  z-index: 1;
+  transition: 0.2s;
 }

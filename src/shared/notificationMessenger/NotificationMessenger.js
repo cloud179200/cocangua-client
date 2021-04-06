@@ -13,11 +13,12 @@ const NotificationMessage = (props) => {
       dispatch(removeNotificationMessage(idMessage));
     }, 4000);
     return () => clearTimeout(displayMessage);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <motion.div
-      initial={{ x: -200, scale: 0 }}
-      animate={{ x: 0, scale: 1 }}
+      initial={{ y: 200, scale: 0 }}
+      animate={{ y: 0, scale: 1 }}
       transition={{
         type: "spring",
         stiffness: 180,

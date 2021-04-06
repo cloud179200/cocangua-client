@@ -21,6 +21,7 @@ const Signin = (props) => {
   const dispatch = useDispatch();
   const handleInputChange = (e) => {
     let value = e.target.value.replace(" ", "");
+    // eslint-disable-next-line no-control-regex
     const re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
     value = value.replace(re, "");
     setState({ ...state, [e.target.name]: value });

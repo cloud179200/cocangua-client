@@ -1,21 +1,24 @@
 import { useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
-import { Input, Button } from "semantic-ui-react";
-import { useState } from "react";
+import { Input } from "semantic-ui-react";
+import { useEffect, useState } from "react";
 import avatar1 from "../../shared/media/image/ingame_Img_user_01.png";
 import avatar2 from "../../shared/media/image/ingame_Img_user_02.png";
 import avatar3 from "../../shared/media/image/ingame_Img_user_03.png";
 import avatar4 from "../../shared/media/image/ingame_Img_user_04.png";
 import avatar5 from "../../shared/media/image/ingame_Img_user_05.png";
 import avatar6 from "../../shared/media/image/ingame_Img_user_06.png";
-import Loading from "../shared/Loading";
 import {
   addNotificationMessage,
   updateUser,
   updateUserPassword,
+  createRoom,
+  joinRoom,
 } from "../../actions";
 import { Modal } from "semantic-ui-react";
+import { motion } from "framer-motion";
+import axios from "../../shared/axios/axios";
 const openInNewTab = (url) => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
   if (newWindow) newWindow.opener = null;
@@ -44,7 +47,9 @@ const Rooms = () => {
   const { sound, btnClickAudio } = audioControl;
   const [playBtnClickAudio] = useSound(btnClickAudio);
   const user = useSelector((state) => state.user);
+  // const room = useSelector((state) => state.room);
   const { id, username, email, gender, avatar, wins } = user;
+
   const [state, setState] = useState({
     searchKey: "",
   });
@@ -55,6 +60,7 @@ const Rooms = () => {
     infoUser: false,
     setAvatar: false,
   });
+  const [rooms, setRooms] = useState([]);
   const [currentDataUser, setCurrentDataUser] = useState({
     username,
     email,
@@ -125,6 +131,25 @@ const Rooms = () => {
       dispatch(updateUserPassword({ oldPassword, newPassword }));
     }
   };
+  const handleCreateRoom = () => {
+    dispatch(createRoom());
+  };
+  useEffect(() => {
+    const { searchKey } = state;
+    const data = JSON.stringify({
+      rid: searchKey,
+    });
+    axios
+      .post("/findroom", data)
+      .then((res) => {
+        const data = res.data;
+        setRooms(data);
+      })
+      .catch((error) => {
+        dispatch(addNotificationMessage(error.message, true));
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.searchKey]);
   return (
     <div className="rooms">
       <Modal open={modal.infoUser} className="modal info-user">
@@ -200,6 +225,7 @@ const Rooms = () => {
                       type="email"
                       onChange={(e) => {
                         let value = e.target.value.replace(" ", "");
+                        // eslint-disable-next-line no-control-regex
                         const re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
                         value = value.replace(re, "");
                         setCurrentDataUser({
@@ -360,38 +386,42 @@ const Rooms = () => {
             onChange={handleOnChangeSearchBox}
           ></Input>
         </div>
-        <div className="create-box">
-          <Button color="teal">Create</Button>
-        </div>
-        <div className="quickplay-box">
-          <Button color="green">Quick Play</Button>
-        </div>
+        <button className="create-box" onClick={handleCreateRoom}>
+          Create
+        </button>
+        <button className="quickplay-box">Quick Play</button>
       </div>
       <div className="rooms-main">
-        <div className="title-row">
+        <div className="row rooms-title">
           <div>Room ID</div>
-          <div>Room Name</div>
+          <div>Status</div>
           <div>Number player</div>
         </div>
-        <div className="item-row">
-          <div>123456</div>
-          <div>testing</div>
-          <div>4/4 players</div>
-        </div>
-        <div className="item-row">
-          <div>123456</div>
-          <div>testing</div>
-          <div>4/4 players</div>
-        </div>
-        <div className="item-row">
-          <div>123456</div>
-          <div>testing</div>
-          <div>4/4 players</div>
-        </div>
-        <div className="item-row">
-          <div>123456</div>
-          <div>testing</div>
-          <div>4/4 players</div>
+        <div className="rooms-container">
+          {rooms &&
+            rooms.map((room) => (
+              <motion.div
+                initial={{ y: -200 }}
+                animate={{ y: 0 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 180,
+                  damping: 20,
+                }}
+                key={room.roomId}
+              >
+                <div
+                  className="row rooms-item"
+                  onClick={() => {
+                    dispatch(joinRoom(room.roomId));
+                  }}
+                >
+                  <div>{room.roomId}</div>
+                  <div>{room.status ? "Playing..." : "Waiting..."}</div>
+                  <div>{room.totalUser}/4 players</div>
+                </div>
+              </motion.div>
+            ))}
         </div>
       </div>
       <div className="main-foot">

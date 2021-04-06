@@ -22,7 +22,7 @@ import avatar3 from "../../shared/media/image/ingame_Img_user_03.png";
 import avatar4 from "../../shared/media/image/ingame_Img_user_04.png";
 import avatar5 from "../../shared/media/image/ingame_Img_user_05.png";
 import avatar6 from "../../shared/media/image/ingame_Img_user_06.png";
-import Loading from "../shared/Loading";
+import { disconnectSocket } from "../../shared/socket/socket";
 const openInNewTab = (url) => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
   if (newWindow) newWindow.opener = null;
@@ -57,7 +57,7 @@ const MainSetting = () => {
               className="main-menu-setting-item-btn"
               style={{
                 backgroundImage: `url(${SoundIcon})`,
-                border: `${!sound ? "5px solid #f7ae39" : "3px solid #f6d2e1"}`,
+                border: `${!sound ? "3px solid black" : "3px solid #f6d2e1"}`,
               }}
               onClick={(e) => {
                 sound && playBtnClickAudio();
@@ -70,7 +70,7 @@ const MainSetting = () => {
               className="main-menu-setting-item-btn"
               style={{
                 backgroundImage: `url(${MusicIcon})`,
-                border: `${!music ? "5px solid #f7ae39" : "3px solid #f6d2e1"}`,
+                border: `${!music ? "3px solid black" : "3px solid #f6d2e1"}`,
               }}
               onClick={(e) => {
                 sound && playBtnClickAudio();
@@ -85,6 +85,7 @@ const MainSetting = () => {
               className="main-menu-setting-item-btn"
               style={{ flexBasis: "100%" }}
               onClick={() => {
+                disconnectSocket();
                 dispatch(removeUser());
                 dispatch(addNotificationMessage("Signout success!", false));
               }}
@@ -151,6 +152,7 @@ const Lobby = () => {
     const validEmail = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
       email
     );
+    console.log(avatar);
     if (email.length < 0) {
       dispatch(addNotificationMessage("Please fill info!", true));
     } else if (!validEmail) {
@@ -258,6 +260,7 @@ const Lobby = () => {
                       type="email"
                       onChange={(e) => {
                         let value = e.target.value.replace(" ", "");
+                        // eslint-disable-next-line no-control-regex
                         const re = /(?![\x00-\x7F]|[\xC0-\xDF][\x80-\xBF]|[\xE0-\xEF][\x80-\xBF]{2}|[\xF0-\xF7][\x80-\xBF]{3})./g;
                         value = value.replace(re, "");
                         setCurrentDataUser({

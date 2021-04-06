@@ -7,10 +7,14 @@ import greenBooth from "../../shared/media/image/booth_green.png";
 import pinkBooth from "../../shared/media/image/booth_pink.png";
 import yellowBooth from "../../shared/media/image/booth_yellow.png";
 import finishBlock from "../../shared/media/image/finish.png";
-import whiteWrapper from "../../shared/media/image/white_wrapper.png";
+import { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { addPlace } from "../../actions";
 
 const Square = (props) => {
-  const { color, type, wrapper } = props;
+  const { color, type, order} = props;
+  const squareRef = useRef(null);
+  const dispatch = useDispatch();
   const block = () => {
     // eslint-disable-next-line default-case
     switch (type) {
@@ -44,15 +48,20 @@ const Square = (props) => {
         return finishBlock;
     }
   };
+  useEffect(() => {
+    if(squareRef){
+      const {bottom, right, width, height} = squareRef.current.getBoundingClientRect();
+      dispatch(addPlace({[order]: {bottom, right, width, height}}))
+    }
+    return () => {};
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
-    <div className="square" style={{ backgroundImage: `url(${block()})` }}>
-      {wrapper && (
-        <div
-          className="white-wrapper"
-          style={{ backgroundImage: `url(${whiteWrapper})` }}
-        ></div>
-      )}
-    </div>
+    <div
+      ref={squareRef}
+      className="square"
+      style={{ backgroundImage: `url(${block()})` }}
+    ></div>
   );
 };
 

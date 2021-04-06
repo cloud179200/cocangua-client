@@ -10,17 +10,14 @@ import { loadUser, removeUser } from "./actions";
 import NotificationMessage from "./shared/notificationMessenger/NotificationMessenger";
 import PageLoading from "./components/shared/PageLoading";
 import Board from "./components/Game/Board";
-// import {io} from "socket.io-client";
+import { disconnectSocket, socket} from "./shared/socket/socket";
 const App = () => {
   const { music } = useSelector((state) => state.audioControl);
   const { messages } = useSelector((state) => state.notificationMessage);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [pageLoading, setPageLoading] = useState(true);
-
-  // const socket = io.connect("http://localhost:8080");
-  // console.log(socket);
-
+  const ioClient = socket;
   const messagesRender = [...messages].map((message) => (
     <NotificationMessage
       key={message.id}
@@ -42,16 +39,16 @@ const App = () => {
       } else {
         dispatch(removeUser());
       }
-    }, 5000);
+    }, 1000);
 
     return () => {
+      disconnectSocket();
       clearTimeout(timeLoadingPage);
     };
   }, []);
 
   return (
     <BrowserRouter>
-      {/* <Board/> */}
       {pageLoading ? (
         <PageLoading />
       ) : (
@@ -61,6 +58,7 @@ const App = () => {
               <Route path="/hello" component={Introduce} />
               <Route path="/auth" component={Auth} />
               <Route path="/lobby" component={Main} />
+              <Route path="/board" component={Board} />
               <Route path="*" component={() => <Redirect to="/hello" />} />
             </Switch>
           </div>
