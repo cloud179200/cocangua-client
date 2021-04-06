@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 import BoardSetting from "./BoardSetting";
 import { useHistory } from "react-router";
+import { joinRoom, subscribeToRoom } from "../../shared/socket/socket";
 
 const Board = () => {
   const audioControl = useSelector((state) => state.audioControl);
@@ -429,17 +430,18 @@ const Board = () => {
       }
     }
   };
-  // const MoveNumber = dice.dice_1 + dice.dice_2;
-  //   MovingHorse(MoveNumber, "pink-1");
+
   useEffect(() => {
-    console.log(user);
-    console.log(room);
+    subscribeToRoom((err, data) => {
+      console.log(data)
+    });
     if (!user) {
       history.push("/auth/signin");
     }
     if (!room) {
       history.push("/lobby/join");
     }
+    room && joinRoom(room.id);
   }, [room, places, dice]);
 
   return (
