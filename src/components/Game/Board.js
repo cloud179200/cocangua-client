@@ -740,59 +740,59 @@ const Board = () => {
         )}
 
         <div className="roll-btn" onClick={handleRollClick}></div>
-        {room && room.user1 && (
+        {(room && room.users.user1) && (
           <div className="user user-1">
             <div
               className="board-avatar"
               style={{
-                backgroundImage: `url(${getAvatarPic(room.user1.avatar)})`,
+                backgroundImage: `url(${getAvatarPic(room.users.user1.avatar)})`,
               }}
             ></div>
             <div className="username-and-win">
-              <div>{room.user1.username}</div>
-              <div>{room.user1.username}</div>
+              <div>{room.users.user1.username}</div>
+              <div>{room.users.user1.id}</div>
             </div>
           </div>
         )}
-        {room && room.user2 && (
+        {(room && room.users.user2) && (
           <div className="user user-2">
             <div
               className="board-avatar"
               style={{
-                backgroundImage: `url(${getAvatarPic(room.user2.avatar)})`,
+                backgroundImage: `url(${getAvatarPic(room.users.user2.avatar)})`,
               }}
             ></div>
             <div className="username-and-win">
-              <div>{room.user2.username}</div>
-              <div>{room.user2.username}</div>
+              <div>{room.users.user2.username}</div>
+              <div>{room.users.user2.id}</div>
             </div>
           </div>
         )}
-        {room && room.user3 && (
+        {(room && room.users.user3) && (
           <div className="user user-3">
             <div
               className="board-avatar"
               style={{
-                backgroundImage: `url(${getAvatarPic(room.user3.avatar)})`,
+                backgroundImage: `url(${getAvatarPic(room.users.user3.avatar)})`,
               }}
             ></div>
             <div className="username-and-win">
-              <div>{room.user3.username}</div>
-              <div>{room.user3.username}</div>
+              <div>{room.users.user3.username}</div>
+              <div>{room.users.user3.id}</div>
             </div>
           </div>
         )}
-        {room && room.user0 && (
+        {(room && room.users.user0) && (
           <div className="user user-4">
             <div
               className="board-avatar"
               style={{
-                backgroundImage: `url(${getAvatarPic(room.user0.avatar)})`,
+                backgroundImage: `url(${getAvatarPic(room.users.user0.avatar)})`,
               }}
             ></div>
             <div className="username-and-win">
-              <div>{room.user0.username}</div>
-              <div>{room.user0.id}</div>
+              <div>{room.users.user0.username}</div>
+              <div>{room.users.user0.id}</div>
             </div>
           </div>
         )}
