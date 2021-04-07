@@ -30,8 +30,8 @@ const Board = () => {
   const { sound, btnClickAudio } = audioControl;
   const [playBtnClickAudio] = useSound(btnClickAudio);
   const [dice, setDice] = useState({
-    dice_1: 0,
-    dice_2: 0,
+    dice_1: 1,
+    dice_2: 1,
   });
   const [control, setControl] = useState({
     currentPlace: null,
@@ -359,7 +359,7 @@ const Board = () => {
     }
   };
   const handleRollClick = () => {
-    setControl({ ...control, rolling: !control.rolling });
+    setControl({ ...control, rolling: true });
     const rollingTimer = setTimeout(() => {
       const dice_1 = Math.floor(Math.random() * 6) + 1;
       const dice_2 = Math.floor(Math.random() * 6) + 1;
@@ -368,7 +368,7 @@ const Board = () => {
         dice_2: dice_2,
       });
 
-      setControl({ ...control, rolling: !control.rolling });
+      setControl({ ...control, rolling: false });
       clearTimeout(rollingTimer);
     }, 1000);
   };
@@ -417,7 +417,9 @@ const Board = () => {
             // eslint-disable-next-line no-loop-func
             (address) => address.order === next
           );
-          next = addressData[0].next;
+          let nextPlace = addressData[0].next.split("-");
+          if (nextPlace[1] === "11") next = nextPlace[0] + "-1";
+          else next = addressData[0].next;
           currentPlaceData = {
             order: addressData[0].order,
             next,
@@ -433,7 +435,7 @@ const Board = () => {
 
   useEffect(() => {
     subscribeToRoom((err, data) => {
-      console.log(data)
+      console.log(data);
     });
     if (!user) {
       history.push("/auth/signin");
@@ -442,6 +444,9 @@ const Board = () => {
       history.push("/lobby/join");
     }
     room && joinRoom(room.id);
+    const moveStep = dice.dice_1 + dice.dice_2;
+    console.log("[dice1]: " + dice.dice_1 + ", [dice2]: " + dice.dice_2);
+    MovingHorse(moveStep, "pink-1");
   }, [room, places, dice]);
 
   return (
@@ -742,12 +747,14 @@ const Board = () => {
         )}
 
         <div className="roll-btn" onClick={handleRollClick}></div>
-        {(room && room.users.user1) && (
+        {room && room.users.user1 && (
           <div className="user user-1">
             <div
               className="board-avatar"
               style={{
-                backgroundImage: `url(${getAvatarPic(room.users.user1.avatar)})`,
+                backgroundImage: `url(${getAvatarPic(
+                  room.users.user1.avatar
+                )})`,
               }}
             ></div>
             <div className="username-and-win">
@@ -756,12 +763,14 @@ const Board = () => {
             </div>
           </div>
         )}
-        {(room && room.users.user2) && (
+        {room && room.users.user2 && (
           <div className="user user-2">
             <div
               className="board-avatar"
               style={{
-                backgroundImage: `url(${getAvatarPic(room.users.user2.avatar)})`,
+                backgroundImage: `url(${getAvatarPic(
+                  room.users.user2.avatar
+                )})`,
               }}
             ></div>
             <div className="username-and-win">
@@ -770,12 +779,14 @@ const Board = () => {
             </div>
           </div>
         )}
-        {(room && room.users.user3) && (
+        {room && room.users.user3 && (
           <div className="user user-3">
             <div
               className="board-avatar"
               style={{
-                backgroundImage: `url(${getAvatarPic(room.users.user3.avatar)})`,
+                backgroundImage: `url(${getAvatarPic(
+                  room.users.user3.avatar
+                )})`,
               }}
             ></div>
             <div className="username-and-win">
@@ -784,12 +795,14 @@ const Board = () => {
             </div>
           </div>
         )}
-        {(room && room.users.user0) && (
+        {room && room.users.user0 && (
           <div className="user user-4">
             <div
               className="board-avatar"
               style={{
-                backgroundImage: `url(${getAvatarPic(room.users.user0.avatar)})`,
+                backgroundImage: `url(${getAvatarPic(
+                  room.users.user0.avatar
+                )})`,
               }}
             ></div>
             <div className="username-and-win">

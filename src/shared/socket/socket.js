@@ -26,8 +26,7 @@ export const sendMessage = (roomId, content) => {
 };
 export const joinRoom = (roomId) => {
   const token = localStorage.getItem("token_seahorsechessapp");
-  if (token)
-    socket.emit("join-room", { rid: roomId, token });
+  if (token && socket) socket.emit("join-room", { rid: roomId, token });
 };
 export const subscribeToRoom = (cb) => {
   if(!socket) return true;
