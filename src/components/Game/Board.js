@@ -432,18 +432,18 @@ const Board = () => {
       }
     }
   };
-
+  subscribeToRoom((err, data) => {
+    console.log(data);
+  });
+  room && joinRoom(room.id);
   useEffect(() => {
-    subscribeToRoom((err, data) => {
-      console.log(data);
-    });
+    
     if (!user) {
       history.push("/auth/signin");
     }
     if (!room) {
       history.push("/lobby/join");
     }
-    room && joinRoom(room.id);
     const moveStep = dice.dice_1 + dice.dice_2;
     console.log("[dice1]: " + dice.dice_1 + ", [dice2]: " + dice.dice_2);
     MovingHorse(moveStep, "pink-1");
