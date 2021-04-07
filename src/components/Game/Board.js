@@ -19,6 +19,7 @@ import useSound from "use-sound";
 import BoardSetting from "./BoardSetting";
 import { useHistory } from "react-router";
 import { joinRoom, subscribeToRoom } from "../../shared/socket/socket";
+import { setRoom } from "../../actions";
 
 const Board = () => {
   const audioControl = useSelector((state) => state.audioControl);
@@ -369,6 +370,9 @@ const Board = () => {
       });
 
       setControl({ ...control, rolling: false });
+      const moveStep = dice.dice_1 + dice.dice_2;
+      console.log("[dice1]: " + dice.dice_1 + ", [dice2]: " + dice.dice_2);
+      MovingHorse(moveStep, "pink-1");
       clearTimeout(rollingTimer);
     }, 1000);
   };
@@ -433,20 +437,17 @@ const Board = () => {
     }
   };
   subscribeToRoom((err, data) => {
-    console.log(data);
+    !err && dispatch(setRoom(data));
+    err && console.log(err);
   });
   room && joinRoom(room.id);
   useEffect(() => {
-    
     if (!user) {
       history.push("/auth/signin");
     }
     if (!room) {
       history.push("/lobby/join");
     }
-    const moveStep = dice.dice_1 + dice.dice_2;
-    console.log("[dice1]: " + dice.dice_1 + ", [dice2]: " + dice.dice_2);
-    MovingHorse(moveStep, "pink-1");
   }, [room, places, dice]);
 
   return (

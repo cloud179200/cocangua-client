@@ -19,7 +19,6 @@ import {
 import { Modal } from "semantic-ui-react";
 import { motion } from "framer-motion";
 import axios from "../../shared/axios/axios";
-import socket from "../../shared/socket/socket"
 const openInNewTab = (url) => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
   if (newWindow) newWindow.opener = null;

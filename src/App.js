@@ -11,6 +11,7 @@ import NotificationMessage from "./shared/notificationMessenger/NotificationMess
 import PageLoading from "./components/shared/PageLoading";
 import Board from "./components/Game/Board";
 import { disconnectSocket, initiateSocket } from "./shared/socket/socket";
+import Admin from "./components/Admin/Admin";
 const App = () => {
   const { music } = useSelector((state) => state.audioControl);
   const { messages } = useSelector((state) => state.notificationMessage);
@@ -33,18 +34,19 @@ const App = () => {
       if (token) {
         !user && dispatch(loadUser());
         if (user) {
+          if(user.username === "admin") return <Redirect to="admin" />
           initiateSocket();
           return <Redirect to="/lobby" />;
         }
       } else {
         dispatch(removeUser());
       }
-    }, 5000);
+    }, 2000);
     return () => {
       !localStorage.getItem("token_seahorsechessapp") && disconnectSocket();
       clearTimeout(timeLoadingPage);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   return (
@@ -59,6 +61,7 @@ const App = () => {
               <Route path="/auth" component={Auth} />
               <Route path="/lobby" component={Main} />
               <Route path="/board" component={Board} />
+              <Route path="/admin" component={Admin} />
               <Route path="*" component={() => <Redirect to="/hello" />} />
             </Switch>
           </div>

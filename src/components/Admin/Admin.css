@@ -1,0 +1,79 @@
+.admin-container{
+    width: 100%;
+    height: 100vh;
+    background-color: #E8E8E8;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Sensei";
+}
+.admin-container .left{
+    width: 30%;
+    height: 100%;
+}
+.admin-container .right{
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.left .logo{
+    height: 13%;
+    width: 100%;
+    background-color: #FFCBFF;
+    background-image: url("../../shared/media/image/logo_admin.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.admin-control{
+    background-color: #FCE1FC;
+    flex-grow: 1;
+    height: 100%;
+}
+.title{
+    width: 30%;
+    position: absolute;
+    bottom: 2%;
+    text-align: center;
+    font-size: 10px;
+}
+.control{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 13%;
+    padding-left: 5%;
+    align-items: center;
+    font-size: 30px;
+    transition: 0.2s;
+}
+.control:hover{
+    background-color: #FC9FFC;
+}
+.control-icon{
+    width: 50px;
+    height: 50px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+.exit{
+    font-size: 35px;
+    position: absolute;
+    height: 13%;
+    width: 70%;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FF3C3F;
+}
+.admin-board{
+    background-color: #FFFFFF;
+    width: 80%;
+    height: 70%;
+}
