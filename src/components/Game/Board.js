@@ -440,7 +440,6 @@ const Board = () => {
     !err && dispatch(setRoom(data));
     err && console.log(err);
   });
-  room && joinRoom(room.id);
   useEffect(() => {
     if (!user) {
       history.push("/auth/signin");
@@ -448,6 +447,7 @@ const Board = () => {
     if (!room) {
       history.push("/lobby/join");
     }
+    room && joinRoom(room.id);
   }, [room, places, dice]);
 
   return (
