@@ -148,7 +148,7 @@ const Rooms = () => {
       .catch((error) => {
         dispatch(addNotificationMessage(error.message, true));
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.searchKey]);
   return (
     <div className="rooms">
@@ -398,7 +398,8 @@ const Rooms = () => {
           <div>Number player</div>
         </div>
         <div className="rooms-container">
-          {rooms &&
+          {() => {
+            if(rooms)
             rooms.map((room) => (
               <motion.div
                 initial={{ y: -200 }}
@@ -414,6 +415,7 @@ const Rooms = () => {
                   className="row rooms-item"
                   onClick={() => {
                     dispatch(joinRoom(room.roomId));
+                    joinRoom(room.roomId);
                   }}
                 >
                   <div>{room.roomId}</div>
@@ -421,7 +423,8 @@ const Rooms = () => {
                   <div>{room.totalUser}/4 players</div>
                 </div>
               </motion.div>
-            ))}
+            ));
+          }}
         </div>
       </div>
       <div className="main-foot">

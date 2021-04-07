@@ -437,7 +437,9 @@ const Board = () => {
     }
   };
   subscribeToRoom((err, data) => {
-    !err && dispatch(setRoom(data));
+    if (!err) {
+      data !== room && dispatch(setRoom(data));
+    }
     err && console.log(err);
   });
   useEffect(() => {
@@ -447,7 +449,6 @@ const Board = () => {
     if (!room) {
       history.push("/lobby/join");
     }
-    room && joinRoom(room.id);
   }, [room, places, dice]);
 
   return (
@@ -748,7 +749,7 @@ const Board = () => {
         )}
 
         <div className="roll-btn" onClick={handleRollClick}></div>
-        {room && room.users.user1 && (
+        {room && room.users && room.users.user1 && (
           <div className="user user-1">
             <div
               className="board-avatar"
@@ -764,7 +765,7 @@ const Board = () => {
             </div>
           </div>
         )}
-        {room && room.users.user2 && (
+        {room && room.users && room.users.user2 && (
           <div className="user user-2">
             <div
               className="board-avatar"
@@ -780,7 +781,7 @@ const Board = () => {
             </div>
           </div>
         )}
-        {room && room.users.user3 && (
+        {room && room.users && room.users.user3 && (
           <div className="user user-3">
             <div
               className="board-avatar"
@@ -796,7 +797,7 @@ const Board = () => {
             </div>
           </div>
         )}
-        {room && room.users.user0 && (
+        {room && room.users && room.users.user0 && (
           <div className="user user-4">
             <div
               className="board-avatar"
