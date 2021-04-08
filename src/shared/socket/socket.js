@@ -20,18 +20,26 @@ export const subscribeToChat = (cb) => {
   });
 };
 export const sendMessage = (roomId, content) => {
-  const token = localStorage.getItem("token_seahorsechessapp");
-  if (token && roomId && content)
-    socket.emit("send-message", { rid: roomId, content, token });
+  try {
+    const token = localStorage.getItem("token_seahorsechessapp");
+    if (token && roomId && content)
+      socket.emit("send-message", { rid: roomId, content, token });
+  } catch (err) {
+    console.log(err);
+  }
 };
-export const joinRoom = (roomId) => {
+export const joinRoomWithSocket = (roomId) => {
   const token = localStorage.getItem("token_seahorsechessapp");
-  if (token && socket) socket.emit("join-room", { token });
+  if (token && socket) socket.emit("join-room", { rid: roomId, token });
+};
+export const exitRoomWithSocket = (roomId) => {
+  const token = localStorage.getItem("token_seahorsechessapp");
+  if (token && socket) socket.emit("exit-room", { rid: roomId, token });
 };
 export const subscribeToRoom = (cb) => {
-  if(!socket) return true;
-  socket.on("new-user-join", (data) => {
-    console.log("new-user-join");
-    return cb(null, data)
-  })
-}
+  if (!socket) return true;
+  socket.on("update-room", (data) => {
+    console.log("update-room");
+    return cb(null, data);
+  });
+};

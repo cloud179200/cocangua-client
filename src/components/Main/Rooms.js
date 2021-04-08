@@ -19,6 +19,11 @@ import {
 import { Modal } from "semantic-ui-react";
 import { motion } from "framer-motion";
 import axios from "../../shared/axios/axios";
+import {
+  disconnectSocket,
+  initiateSocket,
+  joinRoomWithSocket,
+} from "../../shared/socket/socket";
 const openInNewTab = (url) => {
   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
   if (newWindow) newWindow.opener = null;
@@ -142,14 +147,31 @@ const Rooms = () => {
     axios
       .post("/findroom", data)
       .then((res) => {
-        const data = res.data;
-        setRooms(data);
+        setRooms(res.data);
       })
       .catch((error) => {
         dispatch(addNotificationMessage(error.message, true));
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.searchKey]);
+  useEffect(() => {
+    const { searchKey } = state;
+    const data = JSON.stringify({
+      rid: searchKey,
+    });
+    axios
+      .post("/findroom", data)
+      .then((res) => {
+        setRooms(res.data);
+      })
+      .catch((error) => {
+        dispatch(addNotificationMessage(error.message, true));
+      });
+    initiateSocket();
+    return () => {
+      disconnectSocket();
+    };
+  }, []);
   return (
     <div className="rooms">
       <Modal open={modal.infoUser} className="modal info-user">
@@ -389,7 +411,21 @@ const Rooms = () => {
         <button className="create-box" onClick={handleCreateRoom}>
           Create
         </button>
-        <button className="quickplay-box">Quick Play</button>
+        <button
+          className="quickplay-box"
+          onClick={() => {
+            if (rooms.length > 0) {
+              let roomToJoin = [...rooms];
+              roomToJoin.map((room) => room.roomId);
+              let roomId =
+                roomToJoin[Math.floor(Math.random() * roomToJoin.length)];
+              dispatch(joinRoom(roomId));
+              joinRoomWithSocket(roomId);
+            }
+          }}
+        >
+          Quick Play
+        </button>
       </div>
       <div className="rooms-main">
         <div className="row rooms-title">
@@ -398,8 +434,7 @@ const Rooms = () => {
           <div>Number player</div>
         </div>
         <div className="rooms-container">
-          {() => {
-            if(rooms)
+          {rooms &&
             rooms.map((room) => (
               <motion.div
                 initial={{ y: -200 }}
@@ -415,7 +450,7 @@ const Rooms = () => {
                   className="row rooms-item"
                   onClick={() => {
                     dispatch(joinRoom(room.roomId));
-                    joinRoom(room.roomId);
+                    joinRoomWithSocket(room.roomId);
                   }}
                 >
                   <div>{room.roomId}</div>
@@ -423,8 +458,7 @@ const Rooms = () => {
                   <div>{room.totalUser}/4 players</div>
                 </div>
               </motion.div>
-            ));
-          }}
+            ))}
         </div>
       </div>
       <div className="main-foot">

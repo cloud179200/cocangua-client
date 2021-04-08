@@ -84,7 +84,6 @@ export const loadUser = () => {
           const { status, message } = res.data;
           if (status !== "error") {
             dispatch(setUser({ ...res.data }));
-            dispatch(addNotificationMessage("Signin success", false));
           } else dispatch(addNotificationMessage(message, true));
         })
         .catch((error) => {

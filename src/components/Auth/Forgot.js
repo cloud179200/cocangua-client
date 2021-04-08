@@ -41,6 +41,7 @@ const Forgot = (props) => {
         .post("/resetPasswordRequest", data)
         .then((res) => {
           const { status, message } = res.data;
+          console.log(res.data);
           setLoading(false);
           setState({ ...state, onFormGetCode: !state.onFormGetCode });
           if (status === "success") {

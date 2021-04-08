@@ -18,7 +18,12 @@ import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 import BoardSetting from "./BoardSetting";
 import { useHistory } from "react-router";
-import { joinRoom, subscribeToRoom } from "../../shared/socket/socket";
+import {
+  disconnectSocket,
+  exitRoomWithSocket,
+  initiateSocket,
+  subscribeToRoom,
+} from "../../shared/socket/socket";
 import { setRoom } from "../../actions";
 
 const Board = () => {
@@ -416,14 +421,14 @@ const Board = () => {
           console.log(currentPlaceData.rect);
           const timerHorseMove = setTimeout(() => {
             setControl({ ...control, currentPlace: { bottom, right } });
+            clearTimeout(timerHorseMove);
           }, i * 500);
           addressData = result.addressOrder.filter(
             // eslint-disable-next-line no-loop-func
             (address) => address.order === next
           );
-          let nextPlace = addressData[0].next.split("-");
-          if (nextPlace[1] === "11") next = nextPlace[0] + "-1";
-          else next = addressData[0].next;
+          // let nextPlace = addressData[0].next.split("-");
+          next = addressData[0].next;
           currentPlaceData = {
             order: addressData[0].order,
             next,
@@ -432,24 +437,30 @@ const Board = () => {
               ([key, value]) => key === addressData[0].order
             )[0][1],
           };
+          console.log(currentPlaceData);
         }
       }
     }
   };
-  subscribeToRoom((err, data) => {
-    if (!err) {
-      data !== room && dispatch(setRoom(data));
-    }
-    err && console.log(err);
-  });
   useEffect(() => {
-    if (!user) {
-      history.push("/auth/signin");
-    }
+    initiateSocket();
+    subscribeToRoom((err, data) => {
+      if (Object.keys(data).length > 0) {
+        console.log(data);
+        (data.roomId === room.roomId) && dispatch(setRoom(data));
+      }
+      err && console.log(err);
+    });
+    return () => {
+      room && exitRoomWithSocket(room.roomId);
+      disconnectSocket();
+    };
+  }, []);
+  useEffect(() => {
     if (!room) {
       history.push("/lobby/join");
     }
-  }, [room, places, dice]);
+  }, [room]);
 
   return (
     <>

@@ -449,7 +449,7 @@
 .horse {
   width: 80px;
   height: 80px;
-  position: absolute;
+  position: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
